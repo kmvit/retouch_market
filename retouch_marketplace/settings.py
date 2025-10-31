@@ -11,21 +11,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env if present
+load_dotenv(dotenv_path=BASE_DIR / '.env', override=False)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o9p3o(krj%uuw5s4=1r-x%^@1%tcu1(n035!tput9c^%)u=!ju'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-o9p3o(krj%uuw5s4=1r-x%^@1%tcu1(n035!tput9c^%)u=!ju')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'false').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [h.strip() for h in os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',') if h.strip()]
+
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()]
 
 
 # Application definition
@@ -80,12 +87,32 @@ WSGI_APPLICATION = 'retouch_marketplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+db_engine = os.getenv('DJANGO_DB_ENGINE', 'django.db.backends.sqlite3')
+db_name = os.getenv('DJANGO_DB_NAME')
+db_user = os.getenv('DJANGO_DB_USER')
+db_password = os.getenv('DJANGO_DB_PASSWORD')
+db_host = os.getenv('DJANGO_DB_HOST')
+db_port = os.getenv('DJANGO_DB_PORT')
+
+if db_engine == 'django.db.backends.sqlite3':
+    default_db_name = BASE_DIR / 'db.sqlite3'
+    DATABASES = {
+        'default': {
+            'ENGINE': db_engine,
+            'NAME': db_name or default_db_name,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': db_engine,
+            'NAME': db_name or '',
+            'USER': db_user or '',
+            'PASSWORD': db_password or '',
+            'HOST': db_host or '',
+            'PORT': db_port or '',
+        }
+    }
 
 
 # Password validation
