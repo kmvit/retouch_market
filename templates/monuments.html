@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.min.css">
+    <script src="fonts/svgFont.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <title>Haron Market</title>
+  </head>
+  <body>
+    <div class="svg-placeholder" style="border: 0; clip: rect(0 0 0 0); height: 1px;		margin: -1px; overflow: hidden; padding: 0;		position: absolute; width: 1px;"></div>
+    <script>document.querySelector('.svg-placeholder').innerHTML = SVG_SPRITE;</script>
+    <div class="mainwrap">
+      <header class="header">
+        <div class="container"><a class="header__logo" href="/">
+            <div class="_img"><img src="img/item.svg" alt=""></div>HaronMarket</a>
+          <div class="header__city" data-bs-toggle="modal" data-bs-target="#choose-city">
+            <div class="_img"><img src="img/location.svg" alt=""></div>Москва
+          </div>
+          <nav class="header__nav"><a class="active header__nav-item" href="mp.html">Главная</a><a class="header__nav-item" href="catalog.html">Каталог</a><a class="header__nav-item" href="">Как стать партнером?</a><a class="header__nav-item" href="">Тарифы</a><a class="header__nav-item" href="">Контакты</a>
+          </nav>
+          <div class="header__actions"><a class="header__cart" href="cart.html"> 
+              <div class="_img"><img src="img/cart.svg" alt=""></div>
+              <div class="_quant"></div></a><a class="header__user" href="lk.html">Войти
+              <div class="_img"><img src="img/enter.svg" alt=""></div></a>
+            <button class="header__btn-menu"><img src="img/menu.svg" alt=""></button>
+          </div>
+        </div>
+      </header>
+      <div class="mobile-menu">
+        <div class="container">
+          <div class="mobile-menu__actions"><a class="mobile-menu__user" href="lk.html">Войти
+              <div class="_img"><img src="img/enter.svg" alt=""></div></a></div>
+          <hr class="my-2">
+          <div class="mobile-menu__city" data-bs-toggle="modal" data-bs-target="#choose-city">
+            <div class="_img"><img src="img/location.svg" alt=""></div>Москва
+          </div>
+          <hr class="mt-2 mb-1">
+          <nav class="mobile-menu__nav"><a class="active mobile-menu__nav-item" href="mp.html">Главная</a><a class="mobile-menu__nav-item" href="catalog.html">Каталог</a><a class="mobile-menu__nav-item" href="">Как стать партнером?</a><a class="mobile-menu__nav-item" href="">Тарифы</a><a class="mobile-menu__nav-item" href="">Контакты</a>
+          </nav>
+        </div>
+      </div>
+      <main> </main>
+      <div class="nav subnav">
+        <div class="container"> <a class="subnav__link">Памятники</a><a class="subnav__link">Помощь в захоронении</a><a class="subnav__link">Ретушь и реставрация фото</a><a class="subnav__link">Фотокерамика</a><a class="subnav__link">Интернет магазин</a></div>
+      </div>
+      <div class="production">
+        <div class="container">
+          <div class="production__content">
+            <div class="title-1">Изготовление, доставка <br> и монтаж памятников </div>
+            <div class="production__text mt-1">со 100-летней гарантией под ваш бюджет</div>
+            <div class="production__action">
+              <div class="production__info">Бесплатно рассчитаем стоимость за 5 минут и <br> подберем оптимальный вариант</div><a class="btn btn-primary" href="">Узнать стоимость</a><img class="production__icon" src="img/arrow.svg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="prices">
+        <div class="container"> 
+          <div class="title-1 mb-1">Лучшие цены на памятники в <br> городе Москва</div>
+          <div class="title-3 mb-4 mb-lg-6">При заказе памятника оплатим вам такси до <br> нашего офиса и обратно</div>
+          <div class="prices-guarantees mb-2 mb-lg-4">
+            <div class="prices-guarantee"><img class="prices-guarantee__icon" src="img/prices-guarantee-1.svg" alt="">
+              <div class="prices-guarantee__title mb-05 mb-md-1">Качественная гравировка</div>
+              <div class="prices-guarantee__text">Если вам не понравится результат – переделаем бесплатно</div>
+            </div>
+            <div class="prices-guarantee"><img class="prices-guarantee__icon" src="img/prices-guarantee-2.svg" alt="">
+              <div class="prices-guarantee__title mb-05 mb-md-1">Гарантия на памятник 100 лет</div>
+              <div class="prices-guarantee__text">Гарантируем целостность и сохранность камня, во всех случаях, кроме форс-мажорных ситуаций, описанных в договоре</div>
+            </div>
+            <div class="prices-guarantee"><img class="prices-guarantee__icon" src="img/prices-guarantee-3.svg" alt="">
+              <div class="prices-guarantee__title mb-05 mb-md-1">Гарантия на работу 12 месяцев</div>
+              <div class="prices-guarantee__text">Надежная технология установки: памятник не завалится и сохранит свой изначальный вид на долгие годы</div>
+            </div>
+          </div><a class="btn btn-primary" href="">Рассчитать стоимость памятника</a>
+        </div>
+      </div>
+      <div class="monuments-catalog container pt-md-6 pt-4"> 
+        <div class="title-1 mb-05 text-lg-center">Каталог памятников</div>
+        <div class="title-3 mb-3 mb-lg-6 text-blue-dark text-lg-center">При заказе онлайн скидка до 10%</div>
+        <div>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#mp-catalog-1" type="button" role="tab">Памятники из гранита</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-2" type="button" role="tab">Памятники из мрамора</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-3" type="button" role="tab">Памятники из бетона</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-4" type="button" role="tab">Памятники из полимербетона</button>
+            </li>
+            <div class="tab-content py-lg-5 py-md-4 py-2">
+              <div class="tab-pane fade active show" id="mp-catalog-1" role="tabpanel">
+                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">
+                        <nobr class="_old">5 356,00 руб.</nobr>  
+                        <nobr>от 1 376,00 руб.</nobr>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="mp-catalog-2" role="tabpanel">
+                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">
+                        <nobr class="_old">5 356,00 руб.</nobr>  
+                        <nobr>от 1 376,00 руб.</nobr>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="mp-catalog-3" role="tabpanel">
+                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">
+                        <nobr class="_old">5 356,00 руб.</nobr>  
+                        <nobr>от 1 376,00 руб.</nobr>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="mp-catalog-4" role="tabpanel">
+                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">
+                        <nobr class="_old">5 356,00 руб.</nobr>  
+                        <nobr>от 1 376,00 руб.</nobr>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div><img src="img/item.svg" alt=""/></div>
+                      </div><a class="card-product__title" href="detail.html">Товар</a>
+                      <div class="card-product__price">от 1 376,00 руб.p</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </div>
+        <div class="product-banner">
+          <div class="container"> 
+            <div class="product-banner__img"><img src="img/item.svg" alt=""></div>
+            <div class="product-banner__title">Рассчитаем стоимость памятника <br> по фотографии бесплатно</div>
+            <div class="product-banner__text mt-2">Загрузите фото и получите:</div>
+            <div class="product-banner__offers"> <img class="product-banner__icon" src="img/check.svg" alt="">
+              <div class="product-banner__offer">Стоимость в 3-х ценовых категориях</div>
+            </div>
+            <div class="product-banner__offers"> <img class="product-banner__icon" src="img/check.svg" alt="">
+              <div class="product-banner__offer">Сроки изготовления и установки</div>
+            </div>
+            <div class="product-banner__offers"> <img class="product-banner__icon" src="img/check.svg" alt="">
+              <div class="product-banner__offer">Скидку до 10% при оплате онлайн</div>
+            </div>
+            <div class="product-banner__action mt-2"><a class="btn btn-primary" href="">Загрузить фото</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="steps pt-3 pb-3 pb-lg-6">
+        <div class="container"> 
+          <div class="title-1 text-center mb-4 mb-lg-6">3 шага к покупке и установке памятника</div>
+          <div class="mb-md-6 mb-4 d-flex justify-content-center flex-wrap">
+            <div class="steps__item d-flex"><img class="steps__icon mb-05 mb-md-2" src="img/steps-1.svg" alt="">
+              <div class="steps__title mb-05 mb-md-1">Выбор памятника</div>
+              <div class="steps__text">Помогаем подобрать памятник под ваш бюджет. Также вы можете самостоятельно выбрать и оформить заказ на сайте</div>
+            </div>
+            <div class="steps__item d-flex"><img class="steps__icon mb-05 mb-md-2" src="img/steps-2.svg" alt="">
+              <div class="steps__title mb-05 mb-md-1">Договор</div>
+              <div class="steps__text">Заключаем договор, в котором прописываем сумму и сроки. Сумма фиксируется и не меняется в процессе</div>
+            </div>
+            <div class="steps__item d-flex"><img class="steps__icon mb-05 mb-md-2" src="img/steps-3.svg" alt="">
+              <div class="steps__title mb-05 mb-md-1">Установка</div>
+              <div class="steps__text">Устанавливаем и даем гарантию 12 месяцев на работу и 100 лет на памятник</div>
+            </div>
+          </div>
+          <div class="steps__order d-flex flex-wrap mx-auto"><img class="steps__order-icon me-0 me-md-1 text-center mb-05 mb-md-1 mb-xl-0 ms-md-auto ms-lg-0" src="img/car.svg" alt="">
+            <div class="steps__sale me-0 me-md-auto mb-1 mb-xl-0">При заказе памятника оплатим такси до нашего офиса и обратно </div><a class="btn btn-primary mx-auto mx-lg-0" href="">Получить бесплатную консультацию</a>
+          </div>
+        </div>
+      </div>
+      <div class="work-examples mt-3 mt-lg-6 mb-3">
+        <div class="container"> 
+          <div class="title-1 mb-2 mb-lg-3 text-center">Галерея наших работ</div>
+          <div class="examples-slider"> 
+            <div class="examples-slide d-flex">
+              <div class="examples-slide__info border-bottom">
+                <div class="title-2 mb-05 mb-lg-2 mt-0">Пример</div>
+                <div class="examples-slide__text">Описание, цена, размеры</div>
+                <div class="title-3 examples-slide__counter"></div>
+              </div><img class="examples-slide__img" src="img/gallery-1.jpg" alt="">
+            </div>
+            <div class="examples-slide d-flex">
+              <div class="examples-slide__info border-bottom">
+                <div class="title-2 mb-05 mb-lg-2 mt-0">Пример</div>
+                <div class="examples-slide__text">Описание, цена, размеры</div>
+                <div class="title-3 examples-slide__counter"></div>
+              </div><img class="examples-slide__img" src="img/gallery-2.jpg" alt="">
+            </div>
+            <div class="examples-slide d-flex">
+              <div class="examples-slide__info border-bottom">
+                <div class="title-2 mb-05 mb-lg-2 mt-0">Пример</div>
+                <div class="examples-slide__text">Описание, цена, размеры</div>
+                <div class="title-3 examples-slide__counter"></div>
+              </div><img class="examples-slide__img" src="img/gallery-3.jpg" alt="">
+            </div>
+            <div class="examples-slide d-flex">
+              <div class="examples-slide__info border-bottom">
+                <div class="title-2 mb-05 mb-lg-2 mt-0">Пример</div>
+                <div class="examples-slide__text">Описание, цена, размеры</div>
+                <div class="title-3 examples-slide__counter"></div>
+              </div><img class="examples-slide__img" src="img/gallery-4.jpg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feedbacks pt-3 pt-md-5 pt-xl-6">
+        <div class="container"> 
+          <div class="title-1 mb-05">Отзывы</div>
+          <div class="feedbacks__subtitle mb-3 mb-sm-4">Нам доверяют проводить в последний путь</div>
+                    <div class="slider">
+                      <div class="slides feedback-slide pt-1 pb-2 ps-2 pe-2 border">
+                        <div class="feedback-slide__title">Надежда</div>
+                        <div class="feedback-slide__date mb-1">25. 07. 2019</div>
+                        <div class="feedback-slide__text">Большое спасибо за внимательное отношение и демократичные цены. Похороны прошли спокойно и организованно. Хочется отметить, что организовали все достойно и без лишней нервотрепки</div>
+                      </div>
+                      <div class="slides feedback-slide pt-1 pb-2 ps-2 pe-2 border">
+                        <div class="feedback-slide__title">Надежда</div>
+                        <div class="feedback-slide__date mb-1">25. 07. 2019</div>
+                        <div class="feedback-slide__text">Большое спасибо за внимательное отношение и демократичные цены. Похороны прошли спокойно и организованно. Хочется отметить, что организовали все достойно и без лишней нервотрепки</div>
+                      </div>
+                      <div class="slides feedback-slide pt-1 pb-2 ps-2 pe-2 border">
+                        <div class="feedback-slide__title">Надежда</div>
+                        <div class="feedback-slide__date mb-1">25. 07. 2019</div>
+                        <div class="feedback-slide__text">Большое спасибо за внимательное отношение и демократичные цены. Похороны прошли спокойно и организованно. Хочется отметить, что организовали все достойно и без лишней нервотрепки</div>
+                      </div>
+                      <div class="slides feedback-slide pt-1 pb-2 ps-2 pe-2 border">
+                        <div class="feedback-slide__title">Надежда</div>
+                        <div class="feedback-slide__date mb-1">25. 07. 2019</div>
+                        <div class="feedback-slide__text">Большое спасибо за внимательное отношение и демократичные цены. Похороны прошли спокойно и организованно. Хочется отметить, что организовали все достойно и без лишней нервотрепки</div>
+                      </div>
+                    </div><a class="btn btn-primary feedbacks__btn">Оставить отзыв</a>
+        </div>
+      </div>
+      <div class="location pb-4">
+        <div class="container">
+          <div class="location__item pt-3 border-top"><a class="map map-google"> </a></div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container pb-md-2 pb-1">
+          <hr class="my-md-2 my-1">
+          <div class="row row-cols-md-3 row-cols-1">
+            <div class="col my-1">
+              <p class="text-blue-dark">ТОВАРЫ</p>
+              <p><a href="">Информация</a></p>
+              <p><a href="">Помощь</a></p>
+              <p><a href="">Работа на портале</a></p>
+            </div>
+            <div class="col my-1">
+              <p class="text-blue-dark">ТОВАР</p>
+              <p><a href="">Позиция товара 1</a></p>
+              <p><a href="">Позиция товара 2</a></p>
+              <p><a href="">Позиция товара 3</a></p>
+              <p><a href="">Позиция товара 4</a></p>
+            </div>
+            <div class="col my-1">
+              <p class="text-blue-dark">О КОМПАНИИ</p>
+              <p><a href="">8 800 567 87 89</a></p>
+              <p><a href="">ritualnyeuslugi@yandex.ru</a></p>
+              <p><span>ул. Пушкина, дом. Колотушкина</span></p>
+              <div class="socials mt-2"><a href=""><img src="img/inst.svg" alt=""></a><a href=""><img src="img/yt.svg" alt=""></a><a href=""><img src="img/vk.svg" alt=""></a></div>
+            </div>
+          </div>
+          <hr class="my-md-2 my-1">
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto my-1 d-none d-md-block"><a class="header__logo" href="/">
+                <div class="_img"><img src="img/item.svg" alt=""></div>HaronMarket</a></div>
+            <div class="col-auto my-1"><a href="">Реквизиты</a><br class="d-md-none"><a class="ms-md-4" href="">Политика конфиденциальности</a></div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="modal fade" tabindex="-1" aria-labelledby="choose-city" aria-hidden="true" id="choose-city">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="title-3 mb-2">Выберите город</div>
+            <select class="chosen" name="" data-placeholder="Ваш город">
+              <option></option>
+              <option>Красноярск</option>
+              <option>Тюмень</option>
+              <option>Красноярск</option>
+              <option>Томск</option>
+              <option>Красноярск</option>
+              <option>Уфа</option>
+              <option>Красноярск</option>
+              <option>Тюмень</option>
+              <option>Красноярск</option>
+              <option>Томск</option>
+              <option>Красноярск</option>
+              <option>Уфа</option>
+              <option>Красноярск</option>
+              <option>Тюмень</option>
+              <option>Красноярск</option>
+              <option>Томск</option>
+              <option>Красноярск</option>
+              <option>Уфа</option>
+            </select>
+            <button class="btn btn-primary w-100 mt-2">Перейти</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" aria-labelledby="order-partner" aria-hidden="true" id="order-partner">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <form class="modal-body">
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="title-3 mb-2">Заполните анкету на партнерство!</div>
+            <div class="row row-col-md-2">
+              <div class="col">
+                <label class="mb-1">
+                  <p class="form-label">Фамилия</p>
+                  <input class="form-control" type="text" placeholder="Фамилия" required>
+                </label>
+                <label class="mb-1">
+                  <p class="form-label">Имя</p>
+                  <input class="form-control" type="text" placeholder="Имя" required>
+                </label>
+                <label class="mb-1">
+                  <p class="form-label">Отчество</p>
+                  <input class="form-control" type="text" placeholder="Отчество" required>
+                </label>
+                <label class="mb-1">
+                  <p class="form-label">Город</p>
+                  <input class="form-control" type="text" placeholder="Город" required>
+                </label>
+                <label class="mb-1">
+                  <p class="form-label">Позиция товара</p>
+                  <input class="form-control" type="text" placeholder="Позиция товара" required>
+                </label>
+              </div>
+              <div class="col">
+                <label class="mb-1">
+                  <p class="form-label">ИП или ООО</p>
+                  <input class="form-control" type="text" placeholder="ИП или ООО" required>
+                </label>
+                <label class="mb-1">
+                  <p class="form-label">Паспортные данные</p>
+                  <textarea class="form-control" type="text" placeholder="Паспортные данные" required></textarea>
+                </label>
+              </div>
+            </div>
+            <p class="text-muted mb-1">Отправляя данные вы соглашаетесь с <a href="">политикой конфиденциальности </a></p>
+            <button class="btn btn-primary">Отправить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" aria-labelledby="pay-success" aria-hidden="true" id="pay-success">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form class="modal-body p-md-3">
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="title-3 mb-2">Оплата прошла успешно!</div>
+            <p>Вся информация о заказе отправлена вам на почту. В ближайшее время с вами свяжется поставщик.</p>
+            <p>Если будут вопросы - звоните нам!</p><a class="fs-5" href="tel: 8 800 800 80 00"><img class="me-1" src="img/phone.svg" alt="">8 800 800 80 00</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" aria-labelledby="account-settings" aria-hidden="true" id="account-settings">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="title-2 mt-0 mb-2">Настройки</div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#account-settings-tab-1" type="button" role="tab">Основная информация</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-settings-tab-2" type="button" role="tab">Информация о компании</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-settings-tab-3" type="button" role="tab">Безопасность</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-settings-tab-4" type="button" role="tab">Подписка и аккаунт</button>
+              </li>
+            </ul>
+            <div class="tab-content py-2">
+              <div class="tab-pane fade active show" role="tabpanel" id="account-settings-tab-1">
+                <form>
+                  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Фамилия*</p>
+                        <input class="form-control" type="text" value="" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Имя *</p>
+                        <input class="form-control" type="text" value="Евгения" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Отчество *</p>
+                        <input class="form-control" type="text" value="Сергеевна" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Номер телефона *</p>
+                        <input class="form-control" type="tel" value="+7 (908) 667-78-76" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">E-mail*</p>
+                        <input class="form-control" type="email" value="pochta@gmail.com" required>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <button class="btn btn-outline-primary">Сохранить</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="account-settings-tab-2">
+                <form>
+                  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Название компании*</p>
+                        <input class="form-control" type="text" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">ИНН *</p>
+                        <input class="form-control" type="text" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Город *</p>
+                        <input class="form-control" type="text" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Рабочий телефон *</p>
+                        <input class="form-control" type="tel" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">E-mail*</p>
+                        <input class="form-control" type="email" required>
+                      </label>
+                    </div>
+                    <div class="col">
+                      <label class="mb-1">
+                        <p class="form-label form-label--small">Р/С *</p>
+                        <input class="form-control" type="text" required>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <button class="btn btn-outline-primary">Сохранить</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="account-settings-tab-3">
+                <form class="needs-validation" novalidate>
+                  <label class="mb-1">
+                    <p class="form-label form-label--small">Старый пароль *</p>
+                    <input class="form-control" type="password" required>
+                    <div class="invalid-feedback">Неверно введен пароль</div>
+                  </label>
+                  <label class="mb-1">
+                    <p class="form-label form-label--small">Новый пароль *</p>
+                    <input class="form-control" type="password" required>
+                  </label>
+                  <label class="mb-1">
+                    <p class="form-label form-label--small">Повтор пароля *</p>
+                    <input class="form-control" type="password" required>
+                    <div class="invalid-feedback">Пароли не совпадают</div>
+                  </label>
+                  <div class="mt-2">
+                    <button class="btn btn-outline-primary">Сохранить</button>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" role="tabpanel" id="account-settings-tab-4">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                  <div class="text-center">Ваш тарифный план: Мегаплан. Тариф оплачен до: 27.02.2021. </div>
+                  <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <div class="text-center">Ваш тариф закончился. Для продолжения выберите и оплатите тариф из списка.</div>
+                </div>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <div class="text-center">Ваша подписка скоро закончится. Тариф оплачен до: 27.02.2021.</div>
+                    </div>
+                    <div class="col-auto"><a class="btn btn-danger btn-sm" href="">Оплатить</a></div>
+                  </div>
+                </div>
+                <div class="row justify-content-end my-2">
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" id="flexSwitchCheckChecked38049756" type="checkbox" checked>
+                      <label class="form-check-label" for="flexSwitchCheckChecked38049756">Автопродление</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="title-3 mb-2">Тарифы</div>
+                <div class="card-line"> 
+                  <div class="card-line__row align-items-center">
+                    <div class="card-line__col">1 месяц <strong>Мегаплан</strong></div>
+                    <div class="card-line__col-auto">800 руб</div>
+                    <div class="card-line__col-auto"><a class="btn btn-success btn-sm" href="">Оплатить </a></div>
+                  </div>
+                </div>
+                <div class="card-line"> 
+                  <div class="card-line__row align-items-center">
+                    <div class="card-line__col">1 месяц <strong>Мегаплан</strong></div>
+                    <div class="card-line__col-auto">800 руб</div>
+                    <div class="card-line__col-auto"><a class="btn btn-success btn-sm" href="">Оплатить </a></div>
+                  </div>
+                </div>
+                <div class="card-line"> 
+                  <div class="card-line__row align-items-center">
+                    <div class="card-line__col">1 месяц <strong>Мегаплан</strong></div>
+                    <div class="card-line__col-auto">800 руб</div>
+                    <div class="card-line__col-auto"><a class="btn btn-success btn-sm" href="">Оплатить </a></div>
+                  </div>
+                </div>
+                <div class="card-line bg-primary">
+                  <div class="card-line__row align-items-center">
+                    <div class="card-line__col text-white">1 месяц <strong>Мегаплан</strong></div>
+                    <div class="card-line__col-auto text-white">800 руб</div>
+                    <div class="card-line__col-auto"><a class="btn btn-success btn-sm" href="">Оплатить </a></div>
+                  </div>
+                </div>
+                <div class="card-line bg-success">
+                  <div class="card-line__row align-items-center">
+                    <div class="card-line__col text-white">1 месяц <strong>Мегаплан</strong></div>
+                    <div class="card-line__col-auto text-white">800 руб</div>
+                    <div class="card-line__col-auto"><a class="btn btn-primary btn-sm" href="">Оплатить </a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/index.js"></script>
+  </body>
+</html>
