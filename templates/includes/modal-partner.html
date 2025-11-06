@@ -1,0 +1,48 @@
+{% load static %}
+<div class="modal fade" tabindex="-1" aria-labelledby="order-partner" aria-hidden="true" id="order-partner">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form class="modal-body">
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="title-3 mb-2">Заполните анкету на партнерство!</div>
+        <div class="row row-col-md-2">
+          <div class="col">
+            <label class="mb-1">
+              <p class="form-label">Фамилия</p>
+              <input class="form-control" type="text" placeholder="Фамилия" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Имя</p>
+              <input class="form-control" type="text" placeholder="Имя" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Отчество</p>
+              <input class="form-control" type="text" placeholder="Отчество" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Город</p>
+              <input class="form-control" type="text" placeholder="Город" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Позиция товара</p>
+              <input class="form-control" type="text" placeholder="Позиция товара" required>
+            </label>
+          </div>
+          <div class="col">
+            <label class="mb-1">
+              <p class="form-label">ИП или ООО</p>
+              <input class="form-control" type="text" placeholder="ИП или ООО" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Паспортные данные</p>
+              <textarea class="form-control" type="text" placeholder="Паспортные данные" required></textarea>
+            </label>
+          </div>
+        </div>
+        <p class="text-muted mb-1">Отправляя данные вы соглашаетесь с <a href="">политикой конфиденциальности </a></p>
+        <button class="btn btn-primary">Отправить</button>
+      </form>
+    </div>
+  </div>
+</div>
+

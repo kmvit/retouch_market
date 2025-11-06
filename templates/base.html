@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    {% include 'includes/head.html' %}
+  </head>
+  <body>
+    <div class="svg-placeholder" style="border: 0; clip: rect(0 0 0 0); height: 1px;		margin: -1px; overflow: hidden; padding: 0;		position: absolute; width: 1px;"></div>
+    <script>document.querySelector('.svg-placeholder').innerHTML = SVG_SPRITE;</script>
+    <div class="mainwrap">
+      {% include 'includes/header.html' %}
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+      {% include 'includes/footer.html' %}
+    </div>
+    {% block modals %}{% endblock %}
+    <script src="{% static 'js/index.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
+

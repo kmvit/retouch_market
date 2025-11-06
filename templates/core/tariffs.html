@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Тарифы - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Тарифы</li>
+      </ol>
+    </nav>
+    <div class="title-1 text-center">Тарифы по продвижению товаров и услуг</div>
+    <p class="text-center mt-1">Товар размещается на главном портале <br> и начинает продвигаться согласно выбранному тарифу </p>
+    <div class="row justify-content-center my-md-2">
+      <div class="col-auto"><a class="card-tarif my-md-2 my-1" href="#">
+        <div class="card-tarif__img"><img src="{% static 'img/tarif-1.svg' %}" alt=""></div>
+        <div class="card-tarif__period">3 месяца</div>
+        <div class="card-tarif__price">5 000 р</div></a></div>
+      <div class="col-auto"><a class="card-tarif my-md-2 my-1" href="#">
+        <div class="card-tarif__img"><img src="{% static 'img/tarif-2.svg' %}" alt=""></div>
+        <div class="card-tarif__period">1 год</div>
+        <div class="card-tarif__price">10 000 р</div></a></div>
+    </div>
+    <div class="text-center mb-2">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#order-partner">Оставить заявку на партнерство</button>
+    </div>
+    <p class="text-center">Для размещения своего товара, оставьте заявку<br>  и выберите подходящий тариф</p>
+  </div>
+{% endblock %}
+
+{% block modals %}
+  {% include 'includes/modal-partner.html' %}
+{% endblock %}
+

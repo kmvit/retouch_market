@@ -1,0 +1,31 @@
+{% load static %}
+<header class="header">
+  <div class="container"><a class="header__logo" href="/">
+      <div class="_img"><img src="{% static 'img/item.svg' %}" alt=""></div>HaronMarket</a>
+    <div class="header__city" data-bs-toggle="modal" data-bs-target="#choose-city">
+      <div class="_img"><img src="{% static 'img/location.svg' %}" alt=""></div>Москва
+    </div>
+    <nav class="header__nav"><a class="active header__nav-item" href="{% url 'core:index' %}">Главная</a><a class="header__nav-item" href="{% url 'catalog:catalog' %}">Каталог</a><a class="header__nav-item" href="{% url 'core:partner' %}">Как стать партнером?</a><a class="header__nav-item" href="{% url 'core:tariffs' %}">Тарифы</a><a class="header__nav-item" href="{% url 'core:contacts' %}">Контакты</a>
+    </nav>
+    <div class="header__actions"><a class="header__cart" href="{% url 'cart:detail' %}"> 
+        <div class="_img"><img src="{% static 'img/cart.svg' %}" alt=""></div>
+        <div class="_quant"></div></a><a class="header__user" href="{% url 'accounts:login' %}">Войти
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>
+      <button class="header__btn-menu"><img src="{% static 'img/menu.svg' %}" alt=""></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu">
+  <div class="container">
+    <div class="mobile-menu__actions"><a class="mobile-menu__user" href="{% url 'accounts:login' %}">Войти
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a></div>
+    <hr class="my-2">
+    <div class="mobile-menu__city" data-bs-toggle="modal" data-bs-target="#choose-city">
+      <div class="_img"><img src="{% static 'img/location.svg' %}" alt=""></div>Москва
+    </div>
+    <hr class="mt-2 mb-1">
+    <nav class="mobile-menu__nav"><a class="active mobile-menu__nav-item" href="{% url 'core:index' %}">Главная</a><a class="mobile-menu__nav-item" href="{% url 'catalog:catalog' %}">Каталог</a><a class="mobile-menu__nav-item" href="{% url 'core:partner' %}">Как стать партнером?</a><a class="mobile-menu__nav-item" href="{% url 'core:tariffs' %}">Тарифы</a><a class="mobile-menu__nav-item" href="{% url 'core:contacts' %}">Контакты</a>
+    </nav>
+  </div>
+</div>
+

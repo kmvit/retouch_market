@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Как стать партнером? - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Как стать партнером?</li>
+      </ol>
+    </nav>
+    <div class="title-1 text-lg-center">Как стать партнером?</div>
+    <div class="title-3 text-lg-center">4 простых шага!</div>
+    <div class="row row-cols-lg-4 row-cols-md-2 row-cols-1 my-md-4 my-3">
+      <div class="col partner-step pe-lg-4 my-md-2 my-1">
+        <div class="partner-step__img">
+          <div class="_num">1</div><img src="{% static 'img/step-1.svg' %}" alt="">
+        </div>
+        <div class="partner-step__title">Заявка</div>
+        <div class="partner-step__text">Оставляете заявку, где указываете информацию о себе и желаемую позицию</div>
+      </div>
+      <div class="col partner-step pe-lg-4 my-md-2 my-1">
+        <div class="partner-step__img">
+          <div class="_num">2</div><img src="{% static 'img/step-2.svg' %}" alt="">
+        </div>
+        <div class="partner-step__title">Звонок</div>
+        <div class="partner-step__text">С вами созванивается модератор портала и после успешного обсуждения и выбора позиции вы получаете доступ к личному кабинету</div>
+      </div>
+      <div class="col partner-step pe-lg-4 my-md-2 my-1">
+        <div class="partner-step__img">
+          <div class="_num">3</div><img src="{% static 'img/step-3.svg' %}" alt="">
+        </div>
+        <div class="partner-step__title">Добавление товара</div>
+        <div class="partner-step__text">Добавляете информацию о товаре и компании, выбираете подходящий тариф и товар размещается на главной странице портала</div>
+      </div>
+      <div class="col partner-step pe-lg-4 my-md-2 my-1">
+        <div class="partner-step__img">
+          <div class="_num">4</div><img src="{% static 'img/step-4.svg' %}" alt="">
+        </div>
+        <div class="partner-step__title">Готово</div>
+        <div class="partner-step__text">И вы начинаете зарабатывать с помощью нашего портала!</div>
+      </div>
+    </div>
+    <div class="bg-gradient-2 text-center py-3 my-md-4 my-2">
+      <div class="container">
+        <div class="title-2 mt-0">Станьте партнером в своем городе и получайте<br class="d-none d-lg-inline"> клиентов, даже если у вас нет сайта</div>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#order-partner">Стать партнером</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modals %}
+  {% include 'includes/modal-partner.html' %}
+{% endblock %}
+

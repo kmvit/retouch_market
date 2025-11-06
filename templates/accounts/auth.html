@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Вход - Haron Market{% endblock %}
+
+{% block content %}
+        <div class="container">
+          <div class="row justify-content-center pt-5">
+            <div class="col-auto text-center">
+              <div class="title-1 mb-2">Вход</div>
+              <form class="auth-form">
+                <label class="mt-1">
+                  <div class="form-label">Логин</div>
+                  <input class="form-control" type="text">
+                </label>
+                <label class="mt-1">
+                  <div class="form-label">Пароль</div>
+                  <input class="form-control" type="password">
+                </label>
+              </form>
+              <form class="auth-check-code" style="display:none">
+                <label class="mt-2">
+                  <div class="form-label">Введите код, <br>отправленный вам на почту</div>
+                  <input class="form-control" type="text">
+                </label>
+                <div class="mt-1"><a href="">Отправить еще раз</a></div>
+              </form>
+              <button class="btn btn-primary mt-3 js--demo-next-step">Вход</button>
+              <p class="mt-1">
+                 Если вас нет еще в системе, <br><a href="#" data-bs-toggle="modal" data-bs-target="#order-partner"><strong>подайте заявку на партнерство</strong></a></p>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+
+{% block modals %}
+  {% include 'includes/modal-partner.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // скрипт для демонстрации перехода
+  $(document).ready(function() {
+    $('.js--demo-next-step').click(function(e){
+      e.preventDefault()
+      $('.auth-check-code').slideDown()
+    })
+  })
+</script>
+{% endblock %}

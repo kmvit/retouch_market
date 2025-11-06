@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ page_title }}</li>
+      </ol>
+    </nav>
+    <div class="title-1 mb-4">{{ page_title }}</div>
+    <div class="static-content">
+      <p>{{ page_title }}</p>
+    </div>
+  </div>
+{% endblock %}
+

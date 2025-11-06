@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Корзина - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Корзина</li>
+      </ol>
+    </nav>
+          <div class="row"> 
+            <div class="col-xl-8 col-lg-7 col-md-12">
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card p-md-2 p-1 rounded-3 mb-2">
+                <div class="cart-elem">
+                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
+                  <div class="cart-elem__content">
+                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
+                    <div class="row">
+                      <div class="col-auto mb-1">Информация 1
+                      </div>
+                      <div class="col-auto mb-1">Информация 2
+                      </div>
+                      <div class="col-auto mb-1">Информация 3
+                      </div>
+                      <div class="col-auto mb-1">Информация 4
+                      </div>
+                      <div class="col-auto mb-1">Информация 5
+                      </div>
+                      <div class="col-auto mb-1">Информация 6
+                      </div>
+                    </div>
+                    <div class="cart-elem__total">
+                      <div>Всего:</div>
+                      <div class="_old">30 000 рублей</div>
+                      <div>28 000 рублей</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-12">
+              <div class="card p-md-2 p-1 rounded-3">
+                <div class="title-3">Итого</div>
+                <hr>
+                <div class="row justify-content-between text-blue-dark">
+                  <div class="col-auto">Всего:</div>
+                  <div class="col-auto">28 000 рублей</div>
+                </div><a class="btn btn-primary mt-1" href="{% url 'orders:create' %}">Оформить заказ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" tabindex="-1" aria-labelledby="pay-success" aria-hidden="true" id="pay-success">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form class="modal-body p-md-3">
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="title-3 mb-2">Оплата прошла успешно!</div>
+            <p>Вся информация о заказе отправлена вам на почту. В ближайшее время с вами свяжется поставщик.</p>
+            <p>Если будут вопросы - звоните нам!</p><a class="fs-5" href="tel: 8 800 800 80 00"><img class="me-1" src="{% static 'img/phone.svg' %}" alt="">8 800 800 80 00</a>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
