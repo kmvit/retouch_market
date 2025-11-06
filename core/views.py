@@ -16,6 +16,8 @@ def static_page(request, page_slug):
         'help': 'Помощь',
         'work': 'Работа на портале',
         'contacts': 'Контакты',
+        'requisites': 'Реквизиты',
+        'privacy': 'Политика конфиденциальности',
     }
     page_title = page_titles.get(page_slug, 'Страница')
     return render(request, 'core/static_page.html', {'page_title': page_title})

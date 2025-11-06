@@ -7961,9 +7961,55 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   } // init button toggle in header for mobile menu
 
-
-  $('.header__btn-menu').on('click', function () {
-    $('body').toggleClass('open--mobile-menu overflow-hidden');
+  // Mobile menu toggle handler - handle clicks on button and image inside
+  $(document).on('click', '.header__btn-menu, .header__btn-menu img', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var $body = $('body');
+    var $menu = $('.mobile-menu');
+    $body.toggleClass('open--mobile-menu overflow-hidden');
+    
+    // Force z-index and visibility when menu is open
+    if ($body.hasClass('open--mobile-menu')) {
+      $menu.css({
+        'z-index': '2000',
+        'opacity': '1',
+        'visibility': 'visible',
+        'pointer-events': 'auto'
+      });
+    } else {
+      $menu.css({
+        'z-index': '-100',
+        'opacity': '0',
+        'visibility': 'hidden',
+        'pointer-events': 'none'
+      });
+    }
+    
+    console.log('Mobile menu toggled. Body has classes:', $body.attr('class'));
+    console.log('Mobile menu z-index:', $menu.css('z-index'));
+    console.log('Mobile menu opacity:', $menu.css('opacity'));
+    console.log('Mobile menu visibility:', $menu.css('visibility'));
+  });
+  
+  // Close mobile menu when clicking outside of it
+  $(document).on('click', '.open--mobile-menu .mobile-menu', function (e) {
+    e.stopPropagation();
+  });
+  
+  $(document).on('click', 'body.open--mobile-menu', function (e) {
+    if (!$(e.target).closest('.mobile-menu, .header__btn-menu').length) {
+      var $body = $('body');
+      var $menu = $('.mobile-menu');
+      $body.removeClass('open--mobile-menu overflow-hidden');
+      // Reset menu styles when closing
+      $menu.css({
+        'z-index': '-100',
+        'opacity': '0',
+        'visibility': 'hidden',
+        'pointer-events': 'none'
+      });
+    }
   }); // init button toggle in account-header for notification
 
   $('.header-account__btn-notification').on('click', function (e) {

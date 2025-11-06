@@ -11,5 +11,7 @@ urlpatterns = [
     path('help/', views.static_page, {'page_slug': 'help'}, name='help'),
     path('work/', views.static_page, {'page_slug': 'work'}, name='work'),
     path('contacts/', views.static_page, {'page_slug': 'contacts'}, name='contacts'),
+    path('requisites/', views.static_page, {'page_slug': 'requisites'}, name='requisites'),
+    path('privacy/', views.static_page, {'page_slug': 'privacy'}, name='privacy'),
 ]
 
