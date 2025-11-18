@@ -5,6 +5,22 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 
 
+class City(models.Model):
+    """Модель города"""
+    name = models.CharField(max_length=100, unique=True, verbose_name=_("Название"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Активен"))
+    sort_order = models.PositiveIntegerField(default=0, verbose_name=_("Порядок сортировки"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Создан"))
+    
+    class Meta:
+        verbose_name = "Город"
+        verbose_name_plural = "Города"
+        ordering = ["sort_order", "name"]
+    
+    def __str__(self) -> str:
+        return self.name
+
+
 class SiteSettings(models.Model):
     phone = models.CharField(max_length=30, blank=True, verbose_name=_("Телефон"))
     email = models.EmailField(blank=True, verbose_name=_("Email"))

@@ -9,16 +9,20 @@
     </nav>
     <div class="header__actions"><a class="header__cart" href="{% url 'cart:detail' %}"> 
         <div class="_img"><img src="{% static 'img/cart.svg' %}" alt=""></div>
-        <div class="_quant"></div></a><a class="header__user" href="{% url 'accounts:login' %}">Войти
-        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>
+        <div class="_quant"></div></a>{% if user.is_authenticated %}<a class="header__user" href="{% url 'accounts:account-main' %}">{{ user.username }}
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>{% else %}<a class="header__user" href="{% url 'accounts:login' %}">Войти
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>{% endif %}
       <button class="header__btn-menu"><img src="{% static 'img/menu.svg' %}" alt=""></button>
     </div>
   </div>
 </header>
 <div class="mobile-menu">
   <div class="container">
-    <div class="mobile-menu__actions"><a class="mobile-menu__user" href="{% url 'accounts:login' %}">Войти
-        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a></div>
+    <div class="mobile-menu__actions">{% if user.is_authenticated %}<a class="mobile-menu__user" href="{% url 'accounts:account-main' %}">{{ user.username }}
+      
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>{% else %}<a class="mobile-menu__user" href="{% url 'accounts:login' %}">
+      
+        <div class="_img"><img src="{% static 'img/enter.svg' %}" alt=""></div></a>{% endif %}</div>
     <hr class="my-2">
     <div class="mobile-menu__city" data-bs-toggle="modal" data-bs-target="#choose-city">
       <div class="_img"><img src="{% static 'img/location.svg' %}" alt=""></div>Москва

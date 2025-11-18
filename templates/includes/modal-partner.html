@@ -2,47 +2,170 @@
 <div class="modal fade" tabindex="-1" aria-labelledby="order-partner" aria-hidden="true" id="order-partner">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <form class="modal-body">
+      <form class="modal-body" id="partner-registration-form">
+        {% csrf_token %}
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="title-3 mb-2">Заполните анкету на партнерство!</div>
+        <div id="partner-message" class="alert" style="display:none;"></div>
         <div class="row row-col-md-2">
           <div class="col">
             <label class="mb-1">
-              <p class="form-label">Фамилия</p>
-              <input class="form-control" type="text" placeholder="Фамилия" required>
+              <p class="form-label">Email *</p>
+              <input class="form-control" type="email" name="email" id="partner-email" placeholder="Email" required>
             </label>
             <label class="mb-1">
-              <p class="form-label">Имя</p>
-              <input class="form-control" type="text" placeholder="Имя" required>
+              <p class="form-label">Пароль *</p>
+              <input class="form-control" type="password" name="password" id="partner-password" placeholder="Пароль" required>
             </label>
             <label class="mb-1">
-              <p class="form-label">Отчество</p>
-              <input class="form-control" type="text" placeholder="Отчество" required>
+              <p class="form-label">Фамилия *</p>
+              <input class="form-control" type="text" name="last_name" id="partner-last-name" placeholder="Фамилия" required>
             </label>
             <label class="mb-1">
-              <p class="form-label">Город</p>
-              <input class="form-control" type="text" placeholder="Город" required>
+              <p class="form-label">Имя *</p>
+              <input class="form-control" type="text" name="first_name" id="partner-first-name" placeholder="Имя" required>
             </label>
             <label class="mb-1">
-              <p class="form-label">Позиция товара</p>
-              <input class="form-control" type="text" placeholder="Позиция товара" required>
+              <p class="form-label">Отчество *</p>
+              <input class="form-control" type="text" name="middle_name" id="partner-middle-name" placeholder="Отчество" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Город *</p>
+              <select class="form-control" name="city_id" id="partner-city" required>
+                <option value="">Выберите город</option>
+              </select>
             </label>
           </div>
           <div class="col">
             <label class="mb-1">
-              <p class="form-label">ИП или ООО</p>
-              <input class="form-control" type="text" placeholder="ИП или ООО" required>
+              <p class="form-label">Телефон</p>
+              <input class="form-control" type="tel" name="phone" id="partner-phone" placeholder="Телефон">
             </label>
             <label class="mb-1">
-              <p class="form-label">Паспортные данные</p>
-              <textarea class="form-control" type="text" placeholder="Паспортные данные" required></textarea>
+              <p class="form-label">ИП или ООО *</p>
+              <input class="form-control" type="text" name="legal_form" id="partner-legal-form" placeholder="ИП или ООО" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Паспортные данные *</p>
+              <textarea class="form-control" name="passport_data" id="partner-passport-data" placeholder="Паспортные данные" required></textarea>
             </label>
           </div>
         </div>
         <p class="text-muted mb-1">Отправляя данные вы соглашаетесь с <a href="">политикой конфиденциальности </a></p>
-        <button class="btn btn-primary">Отправить</button>
+        <button type="submit" class="btn btn-primary" id="partner-submit-btn">Отправить</button>
       </form>
     </div>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  // Загружаем список городов при открытии модального окна
+  $('#order-partner').on('show.bs.modal', function() {
+    loadCities();
+  });
+  
+  function loadCities() {
+    $.ajax({
+      url: '{% url "accounts:get-cities" %}',
+      method: 'GET',
+      success: function(response) {
+        if (response.success) {
+          const citySelect = $('#partner-city');
+          citySelect.empty();
+          citySelect.append('<option value="">Выберите город</option>');
+          response.cities.forEach(function(city) {
+            citySelect.append(`<option value="${city.id}">${city.name}</option>`);
+          });
+        }
+      },
+      error: function() {
+        console.error('Ошибка загрузки списка городов');
+      }
+    });
+  }
+  
+  $('#partner-registration-form').on('submit', function(e) {
+    e.preventDefault();
+    
+    const form = $(this);
+    const submitBtn = $('#partner-submit-btn');
+    const messageDiv = $('#partner-message');
+    
+    // Получаем данные формы
+    const formData = {
+      email: $('#partner-email').val().trim(),
+      password: $('#partner-password').val(),
+      first_name: $('#partner-first-name').val().trim(),
+      last_name: $('#partner-last-name').val().trim(),
+      middle_name: $('#partner-middle-name').val().trim(),
+      phone: $('#partner-phone').val().trim(),
+      city_id: $('#partner-city').val(),
+      legal_form: $('#partner-legal-form').val().trim(),
+      passport_data: $('#partner-passport-data').val().trim()
+    };
+    
+    // Валидация на клиенте
+    const requiredFields = ['email', 'password', 'first_name', 'last_name', 'middle_name', 'city_id', 'legal_form', 'passport_data'];
+    const missingFields = requiredFields.filter(field => !formData[field]);
+    
+    if (missingFields.length > 0) {
+      showMessage('Заполните все обязательные поля', 'error');
+      return;
+    }
+    
+    // Блокируем кнопку
+    submitBtn.prop('disabled', true).text('Отправка...');
+    
+    // Отправляем данные
+    $.ajax({
+      url: '{% url "accounts:register-partner" %}',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(formData),
+      headers: {
+        'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+      },
+      success: function(response) {
+        if (response.success) {
+          showMessage(response.message, 'success');
+          setTimeout(function() {
+            // Закрываем модальное окно
+            $('#order-partner').modal('hide');
+            // Перенаправляем на страницу аккаунта
+            window.location.href = response.redirect_url || '/accounts/account/';
+          }, 1500);
+        } else {
+          showMessage(response.message, 'error');
+          submitBtn.prop('disabled', false).text('Отправить');
+        }
+      },
+      error: function(xhr) {
+        const response = xhr.responseJSON || {};
+        showMessage(response.message || 'Ошибка регистрации. Попробуйте позже.', 'error');
+        submitBtn.prop('disabled', false).text('Отправить');
+      }
+    });
+  });
+  
+  function showMessage(message, type) {
+    const messageDiv = $('#partner-message');
+    messageDiv.removeClass('alert-success alert-danger');
+    messageDiv.addClass(type === 'success' ? 'alert-success' : 'alert-danger');
+    messageDiv.text(message).slideDown();
+    
+    if (type === 'success') {
+      setTimeout(function() {
+        messageDiv.slideUp();
+      }, 3000);
+    }
+  }
+  
+  // Скрываем сообщение при закрытии модального окна
+  $('#order-partner').on('hidden.bs.modal', function() {
+    $('#partner-message').hide();
+    $('#partner-registration-form')[0].reset();
+  });
+});
+</script>
 

@@ -8,24 +8,26 @@
           <div class="row justify-content-center pt-5">
             <div class="col-auto text-center">
               <div class="title-1 mb-2">Вход</div>
-              <form class="auth-form">
+              <div id="auth-message" class="alert" style="display:none;"></div>
+              <form class="auth-form" id="auth-form">
+                {% csrf_token %}
                 <label class="mt-1">
-                  <div class="form-label">Логин</div>
-                  <input class="form-control" type="text">
+                  <div class="form-label">Email</div>
+                  <input class="form-control" type="email" id="auth-email" name="email" required>
                 </label>
                 <label class="mt-1">
                   <div class="form-label">Пароль</div>
-                  <input class="form-control" type="password">
+                  <input class="form-control" type="password" id="auth-password" name="password" required>
                 </label>
               </form>
-              <form class="auth-check-code" style="display:none">
+              <form class="auth-check-code" id="auth-check-code" style="display:none">
                 <label class="mt-2">
                   <div class="form-label">Введите код, <br>отправленный вам на почту</div>
-                  <input class="form-control" type="text">
+                  <input class="form-control" type="text" id="auth-code" name="code" maxlength="6" required>
                 </label>
-                <div class="mt-1"><a href="">Отправить еще раз</a></div>
+                <div class="mt-1"><a href="#" id="resend-code-link">Отправить еще раз</a></div>
               </form>
-              <button class="btn btn-primary mt-3 js--demo-next-step">Вход</button>
+              <button class="btn btn-primary mt-3" id="auth-submit-btn">Вход</button>
               <p class="mt-1">
                  Если вас нет еще в системе, <br><a href="#" data-bs-toggle="modal" data-bs-target="#order-partner"><strong>подайте заявку на партнерство</strong></a></p>
             </div>
@@ -39,12 +41,168 @@
 
 {% block extra_js %}
 <script>
-  // скрипт для демонстрации перехода
   $(document).ready(function() {
-    $('.js--demo-next-step').click(function(e){
-      e.preventDefault()
-      $('.auth-check-code').slideDown()
-    })
-  })
+    let currentEmail = '';
+    let isCodeSent = false;
+    
+    function showMessage(message, type) {
+      const alertDiv = $('#auth-message');
+      alertDiv.removeClass('alert-success alert-danger');
+      alertDiv.addClass(type === 'success' ? 'alert-success' : 'alert-danger');
+      alertDiv.text(message).slideDown();
+      setTimeout(function() {
+        alertDiv.slideUp();
+      }, 5000);
+    }
+    
+    function setLoading(loading) {
+      const btn = $('#auth-submit-btn');
+      if (loading) {
+        btn.prop('disabled', true).text('Отправка...');
+      } else {
+        btn.prop('disabled', false).text('Вход');
+      }
+    }
+    
+    // Отправка кода на почту
+    $('#auth-submit-btn').click(function(e) {
+      e.preventDefault();
+      
+      if (!isCodeSent) {
+        // Первый шаг: отправка кода
+        const email = $('#auth-email').val().trim();
+        const password = $('#auth-password').val();
+        
+        if (!email || !password) {
+          showMessage('Заполните все поля', 'error');
+          return;
+        }
+        
+        setLoading(true);
+        currentEmail = email;
+        
+        $.ajax({
+          url: '{% url "accounts:send-auth-code" %}',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            email: email,
+            password: password
+          }),
+          headers: {
+            'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+          },
+          success: function(response) {
+            if (response.success) {
+              showMessage(response.message, 'success');
+              $('.auth-form').slideUp();
+              $('#auth-check-code').slideDown();
+              isCodeSent = true;
+              $('#auth-submit-btn').text('Проверить код');
+            } else {
+              showMessage(response.message, 'error');
+            }
+          },
+          error: function(xhr) {
+            const response = xhr.responseJSON || {};
+            showMessage(response.message || 'Ошибка отправки кода', 'error');
+          },
+          complete: function() {
+            setLoading(false);
+          }
+        });
+      } else {
+        // Второй шаг: проверка кода
+        const code = $('#auth-code').val().trim();
+        
+        if (!code) {
+          showMessage('Введите код', 'error');
+          return;
+        }
+        
+        setLoading(true);
+        
+        $.ajax({
+          url: '{% url "accounts:verify-auth-code" %}',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            email: currentEmail,
+            code: code
+          }),
+          headers: {
+            'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+          },
+          success: function(response) {
+            if (response.success) {
+              showMessage(response.message, 'success');
+              setTimeout(function() {
+                window.location.href = response.redirect_url || '/accounts/account/';
+              }, 1000);
+            } else {
+              showMessage(response.message, 'error');
+            }
+          },
+          error: function(xhr) {
+            const response = xhr.responseJSON || {};
+            showMessage(response.message || 'Неверный код', 'error');
+          },
+          complete: function() {
+            setLoading(false);
+          }
+        });
+      }
+    });
+    
+    // Повторная отправка кода
+    $('#resend-code-link').click(function(e) {
+      e.preventDefault();
+      
+      if (!currentEmail) {
+        showMessage('Сначала введите email и пароль', 'error');
+        return;
+      }
+      
+      const password = $('#auth-password').val();
+      if (!password) {
+        showMessage('Пароль не может быть пустым', 'error');
+        return;
+      }
+      
+      setLoading(true);
+      
+      $.ajax({
+        url: '{% url "accounts:send-auth-code" %}',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          email: currentEmail,
+          password: password
+        }),
+        headers: {
+          'X-CSRFToken': $('[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+          if (response.success) {
+            showMessage('Код отправлен повторно', 'success');
+          } else {
+            showMessage(response.message, 'error');
+          }
+        },
+        error: function(xhr) {
+          const response = xhr.responseJSON || {};
+          showMessage(response.message || 'Ошибка отправки кода', 'error');
+        },
+        complete: function() {
+          setLoading(false);
+        }
+      });
+    });
+    
+    // Разрешаем ввод только цифр в поле кода
+    $('#auth-code').on('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+  });
 </script>
 {% endblock %}

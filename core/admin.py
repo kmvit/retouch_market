@@ -6,7 +6,16 @@ admin.site.site_title = "HaronMarket"
 admin.site.index_title = "Администрирование HaronMarket"
 
 from django.contrib import admin
-from .models import SiteSettings, StaticPage
+from .models import SiteSettings, StaticPage, City
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ("name", "is_active", "sort_order", "created_at")
+    list_filter = ("is_active", "created_at")
+    search_fields = ("name",)
+    list_editable = ("is_active", "sort_order")
+    ordering = ("sort_order", "name")
 
 
 @admin.register(SiteSettings)
