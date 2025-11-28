@@ -1,0 +1,83 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Ретушь ритуальных фотографий",
+      "slug": "retush-ritualnyh-fotografij",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Реставрация старых фотографий",
+      "slug": "restavraciya-staryh-fotografij",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Обработка памятных фото",
+      "slug": "obrabotka-pamyatnyh-foto",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Создание коллажей и альбомов",
+      "slug": "sozdanie-kollazhej-i-albomov",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Цветокоррекция ритуальных фото",
+      "slug": "cvetokorrekciya-ritualnyh-foto",
+      "parent": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "name": "Базовая ретушь",
+      "slug": "bazovaya-retush",
+      "parent": 1
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 7,
+    "fields": {
+      "name": "Премиум ретушь",
+      "slug": "premium-retush",
+      "parent": 1
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 8,
+    "fields": {
+      "name": "Удаление дефектов",
+      "slug": "udalenie-defektov",
+      "parent": 2
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 9,
+    "fields": {
+      "name": "Восстановление цвета",
+      "slug": "vosstanovlenie-cveta",
+      "parent": 2
+    }
+  }
+]

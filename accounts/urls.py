@@ -15,6 +15,8 @@ urlpatterns = [
     path('api/account/update-basic-info/', views.AccountView.as_view(), {'action': 'update-basic-info'}, name='update-basic-info'),
     path('api/account/update-company-info/', views.AccountView.as_view(), {'action': 'update-company-info'}, name='update-company-info'),
     path('api/account/change-password/', views.AccountView.as_view(), {'action': 'change-password'}, name='change-password'),
+    path('api/account/add-product/', views.add_product, name='add-product'),
+    path('api/account/delete-product/<int:product_id>/', views.delete_product, name='delete-product'),
 ]
 
 

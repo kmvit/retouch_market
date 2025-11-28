@@ -33,19 +33,27 @@
         {% if selected_category %}
         <div class="tab-pane fade active show" id="category-{{ selected_category.id }}" role="tabpanel">
           <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-            <div class="col"><a class="card-add-new" href="">
+            <div class="col"><a class="card-add-new" href="#" data-bs-toggle="modal" data-bs-target="#add-product-modal" data-category-id="{{ selected_category.id }}">
                 <div class="card-add-new__img"><img src="{% static 'img/add-new.svg' %}" alt=""/></div>
                 <div class="card-add-new__title">Добавить новую позицию</div></a></div>
             {% for product in products %}
-            <div class="col">
+            <div class="col" data-product-id="{{ product.id }}">
               <div class="card-product">
-                <div class="card-product__remove">
+                <div class="card-product__remove" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" title="Удалить товар" style="cursor: pointer;">
                   <svg>
                     <use xlink:href="#close"></use>
                   </svg>
                 </div>
                 <div class="card-product__img">
-                  <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
+                  <div>
+                    {% if product.images.all %}
+                      {% with main_image=product.images.all|first %}
+                        <img src="{{ main_image.image.url }}" alt="{{ main_image.alt_text|default:product.name }}"/>
+                      {% endwith %}
+                    {% else %}
+                      <img src="{% static 'img/item.svg' %}" alt="{{ product.name }}"/>
+                    {% endif %}
+                  </div>
                 </div>
                 <a class="card-product__title" href="{% url 'catalog:detail' product_id=product.id %}">{{ product.name }}</a>
                 <div class="card-product__price">
@@ -58,12 +66,15 @@
                 </div>
               </div>
             </div>
-            {% empty %}
-            <div class="col-12">
-              <p class="text-muted">В этой категории пока нет товаров</p>
-            </div>
             {% endfor %}
           </div>
+          {% if not products %}
+          <div class="row mt-3">
+            <div class="col-12">
+              <p class="text-muted text-center">В этой категории пока нет товаров. Добавьте первый товар, нажав на кнопку выше.</p>
+            </div>
+          </div>
+          {% endif %}
         </div>
         {% else %}
         <div class="tab-pane fade active show" id="no-category" role="tabpanel">
@@ -162,6 +173,84 @@
           <div class="title-3 mb-2">Оплата прошла успешно!</div>
           <p>Вся информация о заказе отправлена вам на почту. В ближайшее время с вами свяжется поставщик.</p>
           <p>Если будут вопросы - звоните нам!</p><a class="fs-5" href="tel: 8 800 800 80 00"><img class="me-1" src="{% static 'img/phone.svg' %}" alt="">8 800 800 80 00</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" tabindex="-1" aria-labelledby="add-product" aria-hidden="true" id="add-product-modal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <form class="modal-body" id="add-product-form" enctype="multipart/form-data">
+          {% csrf_token %}
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="title-3 mb-2">Добавить новый товар</div>
+          <div id="add-product-message" class="alert d-none"></div>
+          <div class="row row-cols-md-2 row-cols-1">
+            <div class="col">
+              <label class="mb-1">
+                <p class="form-label">Категория *</p>
+                <select class="form-control" name="category_id" id="product-category" required>
+                  <option value="">Выберите категорию</option>
+                  {% for category in catalog_categories %}
+                  <option value="{{ category.id }}" {% if selected_category and selected_category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Название товара *</p>
+                <input class="form-control" type="text" name="name" id="product-name" placeholder="Название товара" required>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Цена *</p>
+                <input class="form-control" type="number" name="price" id="product-price" step="0.01" min="0" placeholder="0.00" required>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Цена со скидкой</p>
+                <input class="form-control" type="number" name="discount_price" id="product-discount-price" step="0.01" min="0" placeholder="0.00">
+              </label>
+            </div>
+            <div class="col">
+              <label class="mb-1">
+                <p class="form-label">Цвет</p>
+                <select class="form-control" name="color" id="product-color">
+                  <option value="">Не выбран</option>
+                  <option value="red">Красный</option>
+                  <option value="green">Зеленый</option>
+                  <option value="blue">Синий</option>
+                  <option value="black">Черный</option>
+                  <option value="white">Белый</option>
+                </select>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Форма</p>
+                <select class="form-control" name="shape" id="product-shape">
+                  <option value="">Не выбрана</option>
+                  <option value="round">Круглая</option>
+                  <option value="square">Квадратная</option>
+                  <option value="rect">Прямоугольная</option>
+                  <option value="other">Другая</option>
+                </select>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Описание</p>
+                <textarea class="form-control" name="description" id="product-description" rows="6" placeholder="Описание товара"></textarea>
+              </label>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <label class="mb-1">
+                <p class="form-label">Изображения товара</p>
+                <input class="form-control" type="file" name="images" id="product-images" accept="image/*" multiple data-multifile="false">
+                <small class="form-text text-muted">Можно загрузить несколько изображений. Первое изображение будет основным.</small>
+                <div id="image-preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+              </label>
+            </div>
+          </div>
+          <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Добавить товар</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          </div>
         </form>
       </div>
     </div>
@@ -358,4 +447,389 @@
       </div>
     </div>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const addProductForm = document.getElementById('add-product-form');
+  const addProductModal = document.getElementById('add-product-modal');
+  const messageDiv = document.getElementById('add-product-message');
+  
+  // Обработка открытия модального окна - установка категории из data-атрибута
+  if (addProductModal) {
+    addProductModal.addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget;
+      if (button && button.dataset.categoryId) {
+        const categoryId = button.dataset.categoryId;
+        const categorySelect = document.getElementById('product-category');
+        if (categorySelect) {
+          categorySelect.value = categoryId;
+        }
+      }
+    });
+  }
+  
+  // Предпросмотр изображений
+  const imageInput = document.getElementById('product-images');
+  const imagePreview = document.getElementById('image-preview');
+  
+  // Функция для отображения предпросмотра
+  function updateImagePreview() {
+    if (!imagePreview || !imageInput) return;
+    
+    imagePreview.innerHTML = '';
+    
+    // Используем только основное поле #product-images для предпросмотра
+    const files = imageInput.files;
+    if (!files || files.length === 0) return;
+    
+    // Используем Set для отслеживания уникальных файлов
+    const uniqueFiles = new Set();
+    const fileArray = [];
+    
+    // Собираем уникальные файлы
+    Array.from(files).forEach((file) => {
+      if (file.type.startsWith('image/')) {
+        // Создаем уникальный ключ для файла
+        const fileKey = `${file.name}_${file.size}_${file.lastModified}`;
+        if (!uniqueFiles.has(fileKey)) {
+          uniqueFiles.add(fileKey);
+          fileArray.push(file);
+        }
+      }
+    });
+    
+    // Отображаем предпросмотр только для уникальных файлов
+    fileArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '4px';
+        img.style.marginRight = '10px';
+        img.style.marginBottom = '10px';
+        img.style.border = '1px solid #ddd';
+        imagePreview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  
+  // Отключаем MultiFile для нашего поля, если плагин подключен
+  if (typeof jQuery !== 'undefined' && typeof jQuery.fn.MultiFile !== 'undefined') {
+    jQuery(document).ready(function($) {
+      // Исключаем наше поле из автоматической обработки MultiFile
+      const ourField = $('#product-images');
+      
+      // Удаляем класс, который может активировать MultiFile
+      ourField.removeClass('multi');
+      
+      // Добавляем специальный класс для исключения
+      ourField.addClass('no-multifile');
+      
+      // Если MultiFile уже применен, отключаем его
+      if (ourField.hasClass('MultiFile-applied')) {
+        try {
+          ourField.MultiFile('reset');
+          // Удаляем обертку MultiFile
+          const wrapper = ourField.closest('.MultiFile-wrap');
+          if (wrapper.length) {
+            ourField.unwrap();
+          }
+        } catch(e) {
+          console.log('MultiFile reset failed:', e);
+        }
+      }
+      
+      // Переопределяем автоматическое применение MultiFile, чтобы исключить наше поле
+      const originalMultiFile = $.fn.MultiFile;
+      if (originalMultiFile) {
+        $('input[type="file"]').not('.no-multifile, #product-images').each(function() {
+          if (!$(this).hasClass('MultiFile-applied')) {
+            try {
+              $(this).MultiFile({
+                max: 10,
+                accept: 'png|jpeg|jpg|gif|webp',
+                list: $(this).nextAll('.form-control-label__list')
+              });
+            } catch(e) {
+              // Игнорируем ошибки
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  // Обработчик изменения файлов - только один обработчик на основном поле
+  if (imageInput && imagePreview) {
+    imageInput.addEventListener('change', function(e) {
+      // Предотвращаем всплытие события, чтобы не сработали другие обработчики
+      e.stopPropagation();
+      updateImagePreview();
+    }, true);
+  }
+  
+  // Очистка предпросмотра при закрытии модального окна
+  if (addProductModal) {
+    addProductModal.addEventListener('hidden.bs.modal', function() {
+      if (imagePreview) {
+        imagePreview.innerHTML = '';
+      }
+      if (addProductForm) {
+        addProductForm.reset();
+      }
+    });
+  }
+  
+  // Обработка отправки формы
+  if (addProductForm) {
+    addProductForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Скрываем предыдущие сообщения
+      if (messageDiv) {
+        messageDiv.classList.add('d-none');
+        messageDiv.classList.remove('alert-success', 'alert-danger');
+      }
+      
+      // Получаем данные формы
+      const categoryId = document.getElementById('product-category').value;
+      const name = document.getElementById('product-name').value.trim();
+      const description = document.getElementById('product-description').value.trim();
+      const price = document.getElementById('product-price').value.trim();
+      const discountPrice = document.getElementById('product-discount-price').value.trim();
+      const color = document.getElementById('product-color').value;
+      const shape = document.getElementById('product-shape').value;
+      const imageInput = document.getElementById('product-images');
+      
+      // Валидация на клиенте
+      if (!categoryId || !name || !price) {
+        if (messageDiv) {
+          showMessage('Заполните все обязательные поля', 'danger');
+        }
+        return;
+      }
+      
+      // Создаем FormData для отправки файлов
+      const formData = new FormData();
+      formData.append('category_id', categoryId);
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('price', price);
+      if (discountPrice) {
+        formData.append('discount_price', discountPrice);
+      }
+      if (color) {
+        formData.append('color', color);
+      }
+      if (shape) {
+        formData.append('shape', shape);
+      }
+      
+      // Добавляем изображения
+      // Используем только основное поле, чтобы избежать дублирования
+      const mainImageInput = document.getElementById('product-images');
+      const addedFiles = new Set(); // Для отслеживания уже добавленных файлов
+      let totalFiles = 0;
+      
+      if (mainImageInput && mainImageInput.files && mainImageInput.files.length > 0) {
+        Array.from(mainImageInput.files).forEach((file) => {
+          // Создаем уникальный ключ для файла (имя + размер)
+          const fileKey = `${file.name}_${file.size}`;
+          
+          // Проверяем, не добавляли ли мы уже этот файл
+          if (!addedFiles.has(fileKey) && file.type.startsWith('image/')) {
+            formData.append('images', file);
+            addedFiles.add(fileKey);
+            totalFiles++;
+            console.log(`Добавлено изображение ${totalFiles}: ${file.name}, размер: ${file.size}, тип: ${file.type}`);
+          }
+        });
+      }
+      
+      // Если в основном поле нет файлов, проверяем другие поля (на случай если MultiFile переместил файлы)
+      if (totalFiles === 0) {
+        const allImageInputs = document.querySelectorAll('input[name="images"][type="file"]');
+        allImageInputs.forEach((input) => {
+          if (input.files && input.files.length > 0) {
+            Array.from(input.files).forEach((file) => {
+              const fileKey = `${file.name}_${file.size}`;
+              if (!addedFiles.has(fileKey) && file.type.startsWith('image/')) {
+                formData.append('images', file);
+                addedFiles.add(fileKey);
+                totalFiles++;
+                console.log(`Добавлено изображение ${totalFiles}: ${file.name}, размер: ${file.size}, тип: ${file.type}`);
+              }
+            });
+          }
+        });
+      }
+      
+      if (totalFiles === 0) {
+        console.log('Изображения не выбраны');
+      } else {
+        console.log(`Всего загружено уникальных файлов: ${totalFiles}`);
+      }
+      
+      // Получаем CSRF токен
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || getCookie('csrftoken');
+      
+      // Отправляем запрос
+      fetch('{% url "accounts:add-product" %}', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          if (messageDiv) {
+            showMessage(data.message, 'success');
+          }
+          // Очищаем форму
+          addProductForm.reset();
+          if (imagePreview) {
+            imagePreview.innerHTML = '';
+          }
+          // Закрываем модальное окно через 1.5 секунды и перезагружаем страницу
+          setTimeout(function() {
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+              const modal = bootstrap.Modal.getInstance(addProductModal);
+              if (modal) {
+                modal.hide();
+              }
+            }
+            if (data.redirect_url) {
+              window.location.href = data.redirect_url;
+            } else {
+              window.location.reload();
+            }
+          }, 1500);
+        } else {
+          if (messageDiv) {
+            showMessage(data.message || 'Ошибка при добавлении товара', 'danger');
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        if (messageDiv) {
+          showMessage('Произошла ошибка при отправке запроса', 'danger');
+        }
+      });
+    });
+  }
+  
+  function showMessage(message, type) {
+    if (messageDiv) {
+      messageDiv.textContent = message;
+      messageDiv.classList.add('alert', `alert-${type}`);
+      messageDiv.classList.remove('d-none');
+    }
+  }
+  
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  
+  // Обработка удаления товара
+  const deleteButtons = document.querySelectorAll('.card-product__remove');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const productId = this.dataset.productId;
+      const productName = this.dataset.productName || 'товар';
+      
+      if (!productId) {
+        console.error('ID товара не найден');
+        return;
+      }
+      
+      // Подтверждение удаления
+      if (!confirm(`Вы уверены, что хотите удалить товар "${productName}"?\n\nЭто действие нельзя отменить.`)) {
+        return;
+      }
+      
+      // Получаем родительский элемент с карточкой товара
+      const productCard = this.closest('.col[data-product-id]');
+      if (!productCard) {
+        console.error('Карточка товара не найдена');
+        return;
+      }
+      
+      // Получаем CSRF токен
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || getCookie('csrftoken');
+      
+      // Формируем URL для удаления
+      const deleteUrl = '/accounts/api/account/delete-product/' + productId + '/';
+      
+      // Отправляем запрос на удаление
+      fetch(deleteUrl, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Плавно скрываем карточку товара
+          productCard.style.transition = 'opacity 0.3s ease-out';
+          productCard.style.opacity = '0';
+          
+          setTimeout(function() {
+            productCard.remove();
+            
+            // Проверяем, остались ли еще товары
+            const remainingProducts = document.querySelectorAll('.col[data-product-id]');
+            if (remainingProducts.length === 0) {
+              // Если товаров не осталось, показываем сообщение
+              const container = document.querySelector('.row.row-cols-xl-4');
+              if (container) {
+                container.innerHTML = '<div class="col-12"><p class="text-muted text-center">В этой категории пока нет товаров. Добавьте первый товар, нажав на кнопку выше.</p></div>';
+              }
+            }
+          }, 300);
+          
+          // Показываем уведомление об успехе (опционально)
+          if (messageDiv) {
+            showMessage(data.message, 'success');
+            setTimeout(function() {
+              if (messageDiv) {
+                messageDiv.classList.add('d-none');
+              }
+            }, 3000);
+          }
+        } else {
+          alert(data.message || 'Ошибка при удалении товара');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Произошла ошибка при удалении товара. Пожалуйста, попробуйте снова.');
+      });
+    });
+  });
+});
+</script>
 {% endblock %}

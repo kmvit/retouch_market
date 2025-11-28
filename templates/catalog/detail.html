@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Товар - Haron Market{% endblock %}
+{% block title %}{{ product.name }} - Haron Market{% endblock %}
 
 {% block content %}
         <div class="container">
@@ -9,96 +9,130 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
               <li class="breadcrumb-item"><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Товар</li>
+              {% if product.category %}
+                <li class="breadcrumb-item"><a href="{% url 'catalog:catalog' %}">{{ product.category.name }}</a></li>
+              {% endif %}
+              <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
             </ol>
           </nav>
-          <div class="title-3 d-lg-none mb-3">Название товара</div>
+          <div class="title-3 d-lg-none mb-3">{{ product.name }}</div>
           <div class="row"> 
-            <div class="col-auto">
-                            <div class="gallery">
-                              <div class="gallery__slider">
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-1.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-3.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-4.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-1.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-3.jpg' %}" alt=""></div>
-                                </div>
-                                <div class="gallery__slide gallery__slide--photo">
-                                  <div class="gallery__slide-center"><img src="{% static 'img/gallery-4.jpg' %}" alt=""></div>
-                                </div>
-                              </div>
-                              <div class="gallery__footer">
-                                <div class="gallery__prev _disabled">
-                                  <svg>
-                                    <use xlink:href="#arrow"></use>
-                                  </svg>
-                                </div>
-                                <div class="gallery__next">
-                                  <svg>
-                                    <use xlink:href="#arrow"></use>
-                                  </svg>
-                                </div>
-                                <div class="gallery__footer-scroller">
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-1.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-3.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-4.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-1.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-3.jpg' %}" alt=""></div>
-                                  <div class="gallery__thumb"><img src="{% static 'img/gallery-4.jpg' %}" alt=""></div>
-                                </div>
-                              </div>
-                            </div>
-            </div>
-            <div class="col-auto">
-              <div class="title-3 d-none d-lg-block">Название товара</div>
-              <div class="detail-prices">
-                 4 600,00 руб.
-                <div class="_old">4 600,00 руб.</div>
-                <div class="_new">4 600,00 руб.</div>
+            <div class="col-lg-6 col-md-6 col-12 mb-3 mb-md-0">
+              <div class="gallery">
+                <div class="gallery__slider">
+                  {% if product.images_list %}
+                    {% for image in product.images_list %}
+                      <div class="gallery__slide gallery__slide--photo">
+                        <div class="gallery__slide-center"><img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}"></div>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="gallery__slide gallery__slide--photo">
+                      <div class="gallery__slide-center"><img src="{% static 'img/item.svg' %}" alt="{{ product.name }}"></div>
+                    </div>
+                  {% endif %}
+                </div>
+                {% if product.images_list|length > 1 %}
+                  <div class="gallery__footer">
+                    <div class="gallery__prev _disabled">
+                      <svg>
+                        <use xlink:href="#arrow"></use>
+                      </svg>
+                    </div>
+                    <div class="gallery__next">
+                      <svg>
+                        <use xlink:href="#arrow"></use>
+                      </svg>
+                    </div>
+                    <div class="gallery__footer-scroller">
+                      {% for image in product.images_list %}
+                        <div class="gallery__thumb"><img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}"></div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
               </div>
-              <div class="title-3 mt-2">Цвет:</div>
-              <select class="mt-05 chosen" name="" data-placeholder="Пожалуйста, выберите">
-                <option></option>
-                <option>Цвет 1</option>
-                <option>Цвет 2</option>
-              </select>
-              <div class="title-3 mt-2">Форма:</div>
-              <select class="mt-05 chosen" name="" data-placeholder="Пожалуйста, выберите">
-                <option></option>
-                <option>Форма 1</option>
-                <option>Форма 2</option>
-              </select>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+              <div class="title-3 d-none d-lg-block">{{ product.name }}</div>
+              <div class="detail-prices">
+                {% if product.discount_price %}
+                  <div class="_old">{{ product.price|floatformat:2 }} руб.</div>
+                  <div class="_new">{{ product.discount_price|floatformat:2 }} руб.</div>
+                {% else %}
+                  {{ product.price|floatformat:2 }} руб.
+                {% endif %}
+              </div>
+              {% if product.description %}
+                <div class="mt-3">
+                  <div class="title-3">Описание:</div>
+                  <div class="product-description">{{ product.description|safe }}</div>
+                </div>
+              {% endif %}
+              {% if product.color %}
+                <div class="title-3 mt-2">Цвет:</div>
+                <select class="mt-05 chosen" name="color" data-placeholder="Пожалуйста, выберите">
+                  <option></option>
+                  <option value="{{ product.color }}" selected>{{ product.get_color_display }}</option>
+                </select>
+              {% endif %}
+              {% if product.shape %}
+                <div class="title-3 mt-2">Форма:</div>
+                <select class="mt-05 chosen" name="shape" data-placeholder="Пожалуйста, выберите">
+                  <option></option>
+                  <option value="{{ product.shape }}" selected>{{ product.get_shape_display }}</option>
+                </select>
+              {% endif %}
               <div class="title-3 mt-2">Количество:</div>
               <div class="quantity mt-05">
-                <input class="form-control" type="number" min="1" max="9" step="1" value="1">
+                <input class="form-control" type="number" min="1" step="1" value="1" id="quantity-input">
               </div>
               <div class="detail-actions mt-2"> 
-                <button class="btn btn-primary">Добавить в корзину</button>
+                <button class="btn btn-primary" onclick="addToCart({{ product.id }})">Добавить в корзину</button>
                 <button class="favorite ms-05"></button>
-              </div>
-              <div class="detail-actions mt-2 mb-2">
-                <button class="btn btn-primary">Добавить в корзину</button>
-                <button class="favorite ms-05 active"></button>
               </div>
             </div>
           </div>
+          {% if related_products %}
+            <div class="mt-5">
+              <div class="title-2">Похожие товары</div>
+              <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                {% for related_product in related_products %}
+                  <div class="col">
+                    <div class="card-product">
+                      <div class="card-product__img">
+                        <div>
+                          {% if related_product.images.all %}
+                            {% with main_image=related_product.images.all|first %}
+                              <img src="{{ main_image.image.url }}" alt="{{ main_image.alt_text|default:related_product.name }}"/>
+                            {% endwith %}
+                          {% else %}
+                            <img src="{% static 'img/item.svg' %}" alt="{{ related_product.name }}"/>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <a class="card-product__title" href="{% url 'catalog:detail' product_id=related_product.id %}">{{ related_product.name }}</a>
+                      <div class="card-product__price">
+                        {% if related_product.discount_price %}
+                          <nobr class="_old">{{ related_product.price|floatformat:2 }} руб.</nobr>
+                          <nobr>от {{ related_product.discount_price|floatformat:2 }} руб.</nobr>
+                        {% else %}
+                          от {{ related_product.price|floatformat:2 }} руб.
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          <script>
+            function addToCart(productId) {
+              var quantity = document.getElementById('quantity-input').value;
+              // TODO: Реализовать добавление в корзину
+              alert('Товар добавлен в корзину (функция в разработке)');
+            }
+          </script>
         </div>
 {% endblock %}
 

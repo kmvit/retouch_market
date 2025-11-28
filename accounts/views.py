@@ -296,6 +296,9 @@ def account_catalog(request):
     """Страница каталога в личном кабинете"""
     from catalog.models import Category, Product
     
+    # Получаем все родительские категории
+    categories = Category.objects.filter(parent__isnull=True).order_by('name')
+    
     # Получаем выбранную категорию из GET параметра
     category_id = request.GET.get('category')
     selected_category = None
@@ -304,31 +307,197 @@ def account_catalog(request):
     if category_id:
         try:
             selected_category = Category.objects.get(id=category_id, parent__isnull=True)
-            # Получаем товары пользователя для выбранной категории
-            # Пока нет связи с пользователем в модели Product, показываем все товары категории
-            # TODO: Добавить фильтр по пользователю, когда будет поле seller в модели Product
+            # Получаем товары пользователя для выбранной категории с оптимизацией запросов для изображений
             products = Product.objects.filter(
                 category=selected_category,
+                seller=request.user,
                 is_active=True
-            ).order_by('-created_at')
+            ).prefetch_related('images').order_by('-created_at')
         except Category.DoesNotExist:
             pass
     
     # Если категория не выбрана, показываем первую категорию по умолчанию
-    if not selected_category and request.user.is_authenticated:
-        categories = Category.objects.filter(parent__isnull=True).order_by('name')
-        if categories.exists():
-            selected_category = categories.first()
-            products = Product.objects.filter(
-                category=selected_category,
-                is_active=True
-            ).order_by('-created_at')
+    if not selected_category and categories.exists():
+        selected_category = categories.first()
+        products = Product.objects.filter(
+            category=selected_category,
+            seller=request.user,
+            is_active=True
+        ).prefetch_related('images').order_by('-created_at')
     
     context = {
+        'catalog_categories': categories,
         'selected_category': selected_category,
         'products': products,
     }
     return render(request, 'accounts/account-catalog.html', context)
+
+@login_required
+@require_http_methods(["POST"])
+def add_product(request):
+    """Добавление нового товара"""
+    from catalog.models import Category, Product, ProductImage
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    
+    try:
+        # Получаем данные из формы (FormData)
+        category_id = request.POST.get('category_id', '').strip()
+        name = request.POST.get('name', '').strip()
+        description = request.POST.get('description', '').strip()
+        price = request.POST.get('price', '').strip()
+        discount_price = request.POST.get('discount_price', '').strip() or None
+        color = request.POST.get('color', '').strip() or ''
+        shape = request.POST.get('shape', '').strip() or ''
+        
+        # Получаем загруженные файлы
+        images = request.FILES.getlist('images')
+        
+        # Логируем для отладки
+        logger.info(f"Получено изображений: {len(images)}")
+        if images:
+            for img in images:
+                logger.info(f"Изображение: {img.name}, размер: {img.size}, тип: {img.content_type}")
+        
+        # Валидация обязательных полей
+        if not all([category_id, name, price]):
+            return JsonResponse({
+                'success': False,
+                'message': 'Заполните все обязательные поля: категория, название, цена'
+            }, status=400)
+        
+        # Проверяем категорию
+        try:
+            category = Category.objects.get(id=category_id, parent__isnull=True)
+        except (Category.DoesNotExist, ValueError, TypeError):
+            return JsonResponse({
+                'success': False,
+                'message': 'Выбранная категория не найдена'
+            }, status=400)
+        
+        # Проверяем цену
+        try:
+            price_decimal = float(price)
+            if price_decimal <= 0:
+                raise ValueError("Цена должна быть положительным числом")
+        except (ValueError, TypeError):
+            return JsonResponse({
+                'success': False,
+                'message': 'Неверный формат цены'
+            }, status=400)
+        
+        # Проверяем цену со скидкой, если указана
+        discount_price_decimal = None
+        if discount_price:
+            try:
+                discount_price_decimal = float(discount_price)
+                if discount_price_decimal <= 0:
+                    raise ValueError("Цена со скидкой должна быть положительным числом")
+                if discount_price_decimal >= price_decimal:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Цена со скидкой должна быть меньше обычной цены'
+                    }, status=400)
+            except (ValueError, TypeError):
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Неверный формат цены со скидкой'
+                }, status=400)
+        
+        # Создаем товар
+        product = Product.objects.create(
+            category=category,
+            seller=request.user,
+            name=name,
+            description=description,
+            price=price_decimal,
+            discount_price=discount_price_decimal,
+            color=color if color in dict(Product.COLOR_CHOICES) else '',
+            shape=shape if shape in dict(Product.SHAPE_CHOICES) else '',
+            is_active=True
+        )
+        
+        # Сохраняем изображения
+        saved_images_count = 0
+        if images:
+            for index, image_file in enumerate(images):
+                # Проверяем тип файла
+                if not image_file.content_type.startswith('image/'):
+                    logger.warning(f"Пропущен файл {image_file.name}: не является изображением")
+                    continue
+                
+                # Первое изображение делаем основным
+                is_main = (index == 0)
+                
+                try:
+                    ProductImage.objects.create(
+                        product=product,
+                        image=image_file,
+                        alt_text=name,
+                        is_main=is_main,
+                        sort_order=index
+                    )
+                    saved_images_count += 1
+                    logger.info(f"Изображение {image_file.name} успешно сохранено")
+                except Exception as e:
+                    logger.error(f"Ошибка сохранения изображения {image_file.name}: {str(e)}")
+        
+        logger.info(f"Всего сохранено изображений: {saved_images_count}")
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Товар успешно добавлен',
+            'product_id': product.id,
+            'redirect_url': f'/accounts/account/catalog/?category={category_id}'
+        })
+        
+    except Exception as e:
+        logger.error(f"Ошибка добавления товара: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'message': f'Ошибка добавления товара: {str(e)}'
+        }, status=500)
+
+
+@login_required
+@require_http_methods(["POST"])
+def delete_product(request, product_id):
+    """Удаление товара пользователя"""
+    from catalog.models import Product
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    
+    try:
+        # Получаем товар и проверяем, что он принадлежит текущему пользователю
+        try:
+            product = Product.objects.get(id=product_id, seller=request.user)
+        except Product.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'Товар не найден или у вас нет прав на его удаление'
+            }, status=404)
+        
+        product_name = product.name
+        
+        # Удаляем товар (при удалении товара также удалятся все связанные изображения через CASCADE)
+        product.delete()
+        
+        logger.info(f"Товар '{product_name}' (ID: {product_id}) удален пользователем {request.user.id}")
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Товар "{product_name}" успешно удален'
+        })
+        
+    except Exception as e:
+        logger.error(f"Ошибка удаления товара {product_id}: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'message': f'Ошибка при удалении товара: {str(e)}'
+        }, status=500)
+
 
 def logout_view(request):
     logout(request)

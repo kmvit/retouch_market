@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from ckeditor.fields import RichTextField
 
 
@@ -41,6 +42,14 @@ class Product(models.Model):
     ]
 
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="products", verbose_name=_("Категория"))
+    seller = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="products",
+        null=True,
+        blank=True,
+        verbose_name=_("Продавец")
+    )
     name = models.CharField(max_length=255, verbose_name=_("Название"))
     slug = models.SlugField(max_length=255, unique=True, blank=True, verbose_name=_("Слаг"))
     description = RichTextField(blank=True, verbose_name=_("Описание"))

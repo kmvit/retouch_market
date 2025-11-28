@@ -1,0 +1,206 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Базовая ретушь ритуального портрета",
+      "slug": "bazovaya-retush-ritualnogo-portreta",
+      "description": "<p>Профессиональная базовая ретушь портретных фотографий для ритуальных услуг. Включает удаление дефектов, выравнивание тона кожи, легкую коррекцию цвета. Идеально подходит для создания достойного памятного образа.</p>",
+      "price": "800.00",
+      "discount_price": "700.00",
+      "color": "black",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-10T10:00:00Z",
+      "updated_at": "2024-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Премиум ретушь ритуального портрета",
+      "slug": "premium-retush-ritualnogo-portreta",
+      "description": "<p>Премиум ретушь портретных фотографий с глубокой художественной обработкой. Включает все элементы базовой ретуши плюс профессиональную пластику, работу со светом и тенью, создание идеального образа для памятного портрета.</p>",
+      "price": "2500.00",
+      "discount_price": null,
+      "color": "black",
+      "shape": "round",
+      "is_active": true,
+      "created_at": "2024-01-11T10:00:00Z",
+      "updated_at": "2024-01-11T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "category": 2,
+      "name": "Реставрация старых фотографий",
+      "slug": "restavraciya-staryh-fotografij",
+      "description": "<p>Профессиональная реставрация старых, поврежденных фотографий. Восстановление трещин, царапин, выцветших участков. Возвращение фотографии первоначального вида с сохранением всех деталей и атмосферы.</p>",
+      "price": "1500.00",
+      "discount_price": "1300.00",
+      "color": "white",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-12T10:00:00Z",
+      "updated_at": "2024-01-12T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "category": 2,
+      "name": "Восстановление цвета на старых фото",
+      "slug": "vosstanovlenie-cveta-na-staryh-foto",
+      "description": "<p>Восстановление естественных цветов на выцветших черно-белых или старых цветных фотографиях. Профессиональная колоризация с учетом реалистичности и исторической достоверности.</p>",
+      "price": "2000.00",
+      "discount_price": null,
+      "color": "white",
+      "shape": "square",
+      "is_active": true,
+      "created_at": "2024-01-13T10:00:00Z",
+      "updated_at": "2024-01-13T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "category": 3,
+      "name": "Обработка памятного альбома",
+      "slug": "obrabotka-pamyatnogo-alboma",
+      "description": "<p>Полная обработка памятного фотоальбома. Включает цветокоррекцию всех фотографий, ретушь, создание единого стиля и настроения. Идеально для создания достойного памятного альбома.</p>",
+      "price": "5000.00",
+      "discount_price": "4500.00",
+      "color": "black",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-14T10:00:00Z",
+      "updated_at": "2024-01-14T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "category": 3,
+      "name": "Ретушь семейных памятных фото",
+      "slug": "retush-semejnyh-pamyatnyh-foto",
+      "description": "<p>Профессиональная ретушь семейных памятных фотографий. Обработка групповых и индивидуальных портретов с сохранением естественности и теплоты момента.</p>",
+      "price": "1200.00",
+      "discount_price": null,
+      "color": "white",
+      "shape": "round",
+      "is_active": true,
+      "created_at": "2024-01-15T10:00:00Z",
+      "updated_at": "2024-01-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "category": 4,
+      "name": "Создание памятного коллажа",
+      "slug": "sozdanie-pamyatnogo-kollazha",
+      "description": "<p>Создание профессионального памятного коллажа из нескольких фотографий. Композиция, цветокоррекция, единый стиль. Идеально для оформления памятных стендов и альбомов.</p>",
+      "price": "1800.00",
+      "discount_price": "1600.00",
+      "color": "black",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-16T10:00:00Z",
+      "updated_at": "2024-01-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "category": 4,
+      "name": "Дизайн памятного альбома",
+      "slug": "dizajn-pamyatnogo-alboma",
+      "description": "<p>Полный дизайн памятного альбома с обработкой всех фотографий, созданием макета, подбором шрифтов и оформления. Готовый макет для печати.</p>",
+      "price": "6000.00",
+      "discount_price": null,
+      "color": "white",
+      "shape": "square",
+      "is_active": true,
+      "created_at": "2024-01-17T10:00:00Z",
+      "updated_at": "2024-01-17T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "category": 5,
+      "name": "Цветокоррекция ритуальных фотографий",
+      "slug": "cvetokorrekciya-ritualnyh-fotografij",
+      "description": "<p>Профессиональная цветокоррекция ритуальных фотографий. Создание достойного, уважительного образа с правильной передачей цветов и настроения.</p>",
+      "price": "1000.00",
+      "discount_price": "900.00",
+      "color": "black",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-18T10:00:00Z",
+      "updated_at": "2024-01-18T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "category": 1,
+      "name": "Ретушь группового ритуального портрета",
+      "slug": "retush-gruppovogo-ritualnogo-portreta",
+      "description": "<p>Ретушь групповых портретов для ритуальных услуг. Обработка всех участников с сохранением естественности и достоинства образа.</p>",
+      "price": "2000.00",
+      "discount_price": "1800.00",
+      "color": "white",
+      "shape": "rect",
+      "is_active": true,
+      "created_at": "2024-01-19T10:00:00Z",
+      "updated_at": "2024-01-19T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "category": 2,
+      "name": "Удаление дефектов на старых фото",
+      "slug": "udalenie-defektov-na-staryh-foto",
+      "description": "<p>Удаление царапин, пятен, трещин и других дефектов на старых фотографиях. Восстановление целостности изображения с сохранением всех деталей.</p>",
+      "price": "1200.00",
+      "discount_price": null,
+      "color": "white",
+      "shape": "square",
+      "is_active": true,
+      "created_at": "2024-01-20T10:00:00Z",
+      "updated_at": "2024-01-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "category": 5,
+      "name": "Художественная обработка ритуальных фото",
+      "slug": "hudozhestvennaya-obrabotka-ritualnyh-foto",
+      "description": "<p>Художественная обработка ритуальных фотографий с применением профессиональных техник. Создание достойного, уважительного образа с правильной передачей настроения.</p>",
+      "price": "2200.00",
+      "discount_price": null,
+      "color": "black",
+      "shape": "round",
+      "is_active": true,
+      "created_at": "2024-01-21T10:00:00Z",
+      "updated_at": "2024-01-21T10:00:00Z"
+    }
+  }
+]

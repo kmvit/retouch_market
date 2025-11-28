@@ -48,696 +48,98 @@
           </div>
           <div>
             <ul class="nav nav-tabs">
+              {% for item in categories_with_products %}
               <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#mp-catalog-1" type="button" role="tab">Категория 1</button>
+                  <button class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#mp-catalog-{{ item.category.id }}" type="button" role="tab">{{ item.category.name }}</button>
               </li>
+              {% empty %}
               <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-2" type="button" role="tab">Категория 2</button>
+                  <span class="nav-link">Нет категорий</span>
               </li>
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-3" type="button" role="tab">Категория 3</button>
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-4" type="button" role="tab">Категория 4</button>
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mp-catalog-5" type="button" role="tab">Категория 5</button>
-              </li>
+              {% endfor %}
             </ul>
             <div class="tab-content py-lg-5 py-md-4 py-2">
-              <div class="tab-pane fade active show" id="mp-catalog-1" role="tabpanel">
-                <div class="search">
-                  <input class="form-control" type="text" placeholder="Поиск">
-                  <button class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
-                </div>
-                <div class="sort my-1">
-                  <div class="sort__text">Сортировать по:</div>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden checked>
-                    <div class="sort__label-text">тип сортировки 1</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">мой город</div>
-                  </label>
-                </div>
-                <div class="title-2">Категория товара 1</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
+              {% for item in categories_with_products %}
+              <div class="tab-pane fade {% if forloop.first %}active show{% endif %}" id="mp-catalog-{{ item.category.id }}" role="tabpanel">
+                <form method="get" action="{% url 'catalog:catalog' %}" class="search">
+                  <input class="form-control" type="text" name="q" placeholder="Поиск">
+                  <button type="submit" class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
+                </form>
+                <form method="get" action="{% url 'core:index' %}" class="sort-form">
+                  <div class="sort my-1">
+                    <div class="sort__text">Сортировать по:</div>
+                    <label class="sort__label">
+                      <input type="radio" name="sort" value="price_asc" {% if sort_by == 'price_asc' %}checked{% endif %} hidden onchange="this.form.submit()">
+                      <div class="sort__label-text">По цене (дешевые)</div>
+                    </label>
+                    <label class="sort__label">
+                      <input type="radio" name="sort" value="price_desc" {% if sort_by == 'price_desc' %}checked{% endif %} hidden onchange="this.form.submit()">
+                      <div class="sort__label-text">По цене (дорогие)</div>
+                    </label>
+                    <label class="sort__label">
+                      <input type="radio" name="sort" value="name" {% if sort_by == 'name' %}checked{% endif %} hidden onchange="this.form.submit()">
+                      <div class="sort__label-text">По алфавиту</div>
+                    </label>
+                    <label class="sort__label">
+                      <input type="radio" name="sort" value="date" {% if sort_by == 'date' or not sort_by %}checked{% endif %} hidden onchange="this.form.submit()">
+                      <div class="sort__label-text">По дате (новые)</div>
+                    </label>
                   </div>
+                </form>
+                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+                  {% for product in item.products %}
                   <div class="col">
                     <div class="card-product">
                       <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
+                        <div>
+                          {% if product.images.all %}
+                            {% with main_image=product.images.all|first %}
+                              <img src="{{ main_image.image.url }}" alt="{{ main_image.alt_text|default:product.name }}"/>
+                            {% endwith %}
+                          {% else %}
+                            <img src="{% static 'img/item.svg' %}" alt="{{ product.name }}"/>
+                          {% endif %}
+                  </div>
+                      </div>
+                      <a class="card-product__title" href="{% url 'catalog:detail' product_id=product.id %}">{{ product.name }}</a>
                       <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
+                        {% if product.discount_price %}
+                          <nobr class="_old">{{ product.price|floatformat:2 }} руб.</nobr>
+                          <nobr>от {{ product.discount_price|floatformat:2 }} руб.</nobr>
+                        {% else %}
+                          от {{ product.price|floatformat:2 }} руб.
+                        {% endif %}
                       </div>
                     </div>
                   </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
+                  {% empty %}
+                  <div class="col-12">
+                    <div class="alert alert-info">В этой категории пока нет товаров.</div>
                   </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
-                <div class="title-2">Категория товара 2</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center"><a class="btn btn-primary" href="">Посмотреть всё </a></div>
+                <div class="text-center"><a class="btn btn-primary" href="{% url 'catalog:catalog' %}">Посмотреть всё</a></div>
               </div>
-              <div class="tab-pane fade" id="mp-catalog-2" role="tabpanel">
-                <div class="search">
-                  <input class="form-control" type="text" placeholder="Поиск">
-                  <button class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
-                </div>
-                <div class="sort my-1">
-                  <div class="sort__text">Сортировать по:</div>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden checked>
-                    <div class="sort__label-text">тип сортировки 1</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">мой город</div>
-                  </label>
-                </div>
-                <div class="title-2">Категория товара 1</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="title-2">Категория товара 2</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center"><a class="btn btn-primary" href="">Посмотреть всё </a></div>
+              {% empty %}
+              <div class="tab-pane fade active show" id="mp-catalog-empty" role="tabpanel">
+                <div class="alert alert-info">Товары пока не добавлены в каталог.</div>
               </div>
-              <div class="tab-pane fade" id="mp-catalog-3" role="tabpanel">
-                <div class="search">
-                  <input class="form-control" type="text" placeholder="Поиск">
-                  <button class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
-                </div>
-                <div class="sort my-1">
-                  <div class="sort__text">Сортировать по:</div>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden checked>
-                    <div class="sort__label-text">тип сортировки 1</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">мой город</div>
-                  </label>
-                </div>
-                <div class="title-2">Категория товара 1</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="title-2">Категория товара 2</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center"><a class="btn btn-primary" href="">Посмотреть всё </a></div>
-              </div>
-              <div class="tab-pane fade" id="mp-catalog-4" role="tabpanel">
-                <div class="search">
-                  <input class="form-control" type="text" placeholder="Поиск">
-                  <button class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
-                </div>
-                <div class="sort my-1">
-                  <div class="sort__text">Сортировать по:</div>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden checked>
-                    <div class="sort__label-text">тип сортировки 1</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">мой город</div>
-                  </label>
-                </div>
-                <div class="title-2">Категория товара 1</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="title-2">Категория товара 2</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center"><a class="btn btn-primary" href="">Посмотреть всё </a></div>
-              </div>
-              <div class="tab-pane fade" id="mp-catalog-5" role="tabpanel">
-                <div class="search">
-                  <input class="form-control" type="text" placeholder="Поиск">
-                  <button class="search-btn"><img src="{% static 'img/search.svg' %}" alt=""></button>
-                </div>
-                <div class="sort my-1">
-                  <div class="sort__text">Сортировать по:</div>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden checked>
-                    <div class="sort__label-text">тип сортировки 1</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">тип сортировки 2</div>
-                  </label>
-                  <label class="sort__label">
-                    <input type="radio" name="sort" hidden>
-                    <div class="sort__label-text">мой город</div>
-                  </label>
-                </div>
-                <div class="title-2">Категория товара 1</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="title-2">Категория товара 2</div>
-                <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">
-                        <nobr class="_old">5 356,00 руб.</nobr>  
-                        <nobr>от 1 376,00 руб.</nobr>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-product">
-                      <div class="card-product__img">
-                        <div><img src="{% static 'img/item.svg' %}" alt=""/></div>
-                      </div><a class="card-product__title" href="{% url 'catalog:detail' product_id=1 %}">Товар</a>
-                      <div class="card-product__price">от 1 376,00 руб.p</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center"><a class="btn btn-primary" href="">Посмотреть всё </a></div>
-              </div>
+              {% endfor %}
             </div>
           </div>
         </div>
+        <script>
+          // Обработка клика по label для скрытых radio buttons на главной странице
+          document.querySelectorAll('.sort-form .sort__label').forEach(function(label) {
+            label.addEventListener('click', function(e) {
+              var radio = this.querySelector('input[type="radio"]');
+              if (radio && !radio.checked) {
+                radio.checked = true;
+                radio.dispatchEvent(new Event('change'));
+              }
+            });
+          });
+        </script>
         <div class="bg-gradient-2 text-center py-3 my-md-4 my-2">
           <div class="container">
             <div class="title-2 mt-0">Станьте партнером в своем городе и получайте<br class="d-none d-lg-inline"> клиентов, даже если у вас нет сайта</div>
