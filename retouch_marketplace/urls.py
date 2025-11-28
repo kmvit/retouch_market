@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+import os
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,11 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
 ]
 
-if settings.DEBUG:
+# Раздача медиа-файлов
+# В продакшене рекомендуется настроить веб-сервер (nginx/apache) для раздачи медиа-файлов
+# Это обеспечит лучшую производительность и безопасность
+# Для временного решения раздаем медиа и при DEBUG=False
+# Для отключения раздачи через Django установите DJANGO_SERVE_MEDIA=false
+serve_media = os.getenv('DJANGO_SERVE_MEDIA', 'true').lower() in ('1', 'true', 'yes')
+if settings.DEBUG or serve_media:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
