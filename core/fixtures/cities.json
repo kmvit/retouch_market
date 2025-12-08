@@ -3,7 +3,7 @@
     "model": "core.city",
     "pk": 1,
     "fields": {
-      "name": "Москва",
+      "name": "Абакан",
       "is_active": true,
       "sort_order": 1,
       "created_at": "2024-01-01T10:00:00Z"
@@ -13,7 +13,7 @@
     "model": "core.city",
     "pk": 2,
     "fields": {
-      "name": "Санкт-Петербург",
+      "name": "Альметьевск",
       "is_active": true,
       "sort_order": 2,
       "created_at": "2024-01-01T10:00:00Z"
@@ -23,7 +23,7 @@
     "model": "core.city",
     "pk": 3,
     "fields": {
-      "name": "Красноярск",
+      "name": "Анадырь",
       "is_active": true,
       "sort_order": 3,
       "created_at": "2024-01-01T10:00:00Z"
@@ -33,11 +33,1630 @@
     "model": "core.city",
     "pk": 4,
     "fields": {
-      "name": "Новосибирск",
+      "name": "Анапа",
       "is_active": true,
       "sort_order": 4,
       "created_at": "2024-01-01T10:00:00Z"
     }
+  },
+  {
+    "model": "core.city",
+    "pk": 5,
+    "fields": {
+      "name": "Аргун",
+      "is_active": true,
+      "sort_order": 5,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 6,
+    "fields": {
+      "name": "Армавир",
+      "is_active": true,
+      "sort_order": 6,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 7,
+    "fields": {
+      "name": "Архангельск",
+      "is_active": true,
+      "sort_order": 7,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 8,
+    "fields": {
+      "name": "Астрахань",
+      "is_active": true,
+      "sort_order": 8,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 9,
+    "fields": {
+      "name": "Ачхой-Мартан",
+      "is_active": true,
+      "sort_order": 9,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 10,
+    "fields": {
+      "name": "Балашиха",
+      "is_active": true,
+      "sort_order": 10,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 11,
+    "fields": {
+      "name": "Барнаул",
+      "is_active": true,
+      "sort_order": 11,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 12,
+    "fields": {
+      "name": "Белгород",
+      "is_active": true,
+      "sort_order": 12,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 13,
+    "fields": {
+      "name": "Березники",
+      "is_active": true,
+      "sort_order": 13,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 14,
+    "fields": {
+      "name": "Бийск",
+      "is_active": true,
+      "sort_order": 14,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 15,
+    "fields": {
+      "name": "Благовещенск",
+      "is_active": true,
+      "sort_order": 15,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 16,
+    "fields": {
+      "name": "Брянск",
+      "is_active": true,
+      "sort_order": 16,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 17,
+    "fields": {
+      "name": "Буйнакск",
+      "is_active": true,
+      "sort_order": 17,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 18,
+    "fields": {
+      "name": "Великий Новгород",
+      "is_active": true,
+      "sort_order": 18,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 19,
+    "fields": {
+      "name": "Владивосток",
+      "is_active": true,
+      "sort_order": 19,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 20,
+    "fields": {
+      "name": "Владикавказ",
+      "is_active": true,
+      "sort_order": 20,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 21,
+    "fields": {
+      "name": "Владимир",
+      "is_active": true,
+      "sort_order": 21,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 22,
+    "fields": {
+      "name": "Волгоград",
+      "is_active": true,
+      "sort_order": 22,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 23,
+    "fields": {
+      "name": "Волжский",
+      "is_active": true,
+      "sort_order": 23,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 24,
+    "fields": {
+      "name": "Вологда",
+      "is_active": true,
+      "sort_order": 24,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 25,
+    "fields": {
+      "name": "Воронеж",
+      "is_active": true,
+      "sort_order": 25,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 26,
+    "fields": {
+      "name": "Геленджик",
+      "is_active": true,
+      "sort_order": 26,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 27,
+    "fields": {
+      "name": "Глазов",
+      "is_active": true,
+      "sort_order": 27,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 28,
+    "fields": {
+      "name": "Горно-Алтайск",
+      "is_active": true,
+      "sort_order": 28,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 29,
+    "fields": {
+      "name": "Грозный",
+      "is_active": true,
+      "sort_order": 29,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 30,
+    "fields": {
+      "name": "Гудермес",
+      "is_active": true,
+      "sort_order": 30,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 31,
+    "fields": {
+      "name": "Дербент",
+      "is_active": true,
+      "sort_order": 31,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 32,
+    "fields": {
+      "name": "Дзержинск",
+      "is_active": true,
+      "sort_order": 32,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 33,
+    "fields": {
+      "name": "Димитровград",
+      "is_active": true,
+      "sort_order": 33,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 34,
+    "fields": {
+      "name": "Домодедово",
+      "is_active": true,
+      "sort_order": 34,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 35,
+    "fields": {
+      "name": "Екатеринбург",
+      "is_active": true,
+      "sort_order": 35,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 36,
+    "fields": {
+      "name": "Елец",
+      "is_active": true,
+      "sort_order": 36,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 37,
+    "fields": {
+      "name": "Ессентуки",
+      "is_active": true,
+      "sort_order": 37,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 38,
+    "fields": {
+      "name": "Железногорск",
+      "is_active": true,
+      "sort_order": 38,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 39,
+    "fields": {
+      "name": "Жуковский",
+      "is_active": true,
+      "sort_order": 39,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 40,
+    "fields": {
+      "name": "Зеленодольск",
+      "is_active": true,
+      "sort_order": 40,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 41,
+    "fields": {
+      "name": "Златоуст",
+      "is_active": true,
+      "sort_order": 41,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 42,
+    "fields": {
+      "name": "Иваново",
+      "is_active": true,
+      "sort_order": 42,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 43,
+    "fields": {
+      "name": "Ижевск",
+      "is_active": true,
+      "sort_order": 43,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 44,
+    "fields": {
+      "name": "Избербаш",
+      "is_active": true,
+      "sort_order": 44,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 45,
+    "fields": {
+      "name": "Иркутск",
+      "is_active": true,
+      "sort_order": 45,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 46,
+    "fields": {
+      "name": "Йошкар-Ола",
+      "is_active": true,
+      "sort_order": 46,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 47,
+    "fields": {
+      "name": "Казань",
+      "is_active": true,
+      "sort_order": 47,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 48,
+    "fields": {
+      "name": "Калининград",
+      "is_active": true,
+      "sort_order": 48,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 49,
+    "fields": {
+      "name": "Калуга",
+      "is_active": true,
+      "sort_order": 49,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 50,
+    "fields": {
+      "name": "Каменск-Уральский",
+      "is_active": true,
+      "sort_order": 50,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 51,
+    "fields": {
+      "name": "Каспийск",
+      "is_active": true,
+      "sort_order": 51,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 52,
+    "fields": {
+      "name": "Кемерово",
+      "is_active": true,
+      "sort_order": 52,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 53,
+    "fields": {
+      "name": "Кизилюрт",
+      "is_active": true,
+      "sort_order": 53,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 54,
+    "fields": {
+      "name": "Киров",
+      "is_active": true,
+      "sort_order": 54,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 55,
+    "fields": {
+      "name": "Киселёвск",
+      "is_active": true,
+      "sort_order": 55,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 56,
+    "fields": {
+      "name": "Кисловодск",
+      "is_active": true,
+      "sort_order": 56,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 57,
+    "fields": {
+      "name": "Коломна",
+      "is_active": true,
+      "sort_order": 57,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 58,
+    "fields": {
+      "name": "Копейск",
+      "is_active": true,
+      "sort_order": 58,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 59,
+    "fields": {
+      "name": "Королёв",
+      "is_active": true,
+      "sort_order": 59,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 60,
+    "fields": {
+      "name": "Кострома",
+      "is_active": true,
+      "sort_order": 60,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 61,
+    "fields": {
+      "name": "Красногорск",
+      "is_active": true,
+      "sort_order": 61,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 62,
+    "fields": {
+      "name": "Краснодар",
+      "is_active": true,
+      "sort_order": 62,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 63,
+    "fields": {
+      "name": "Красноярск",
+      "is_active": true,
+      "sort_order": 63,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 64,
+    "fields": {
+      "name": "Курган",
+      "is_active": true,
+      "sort_order": 64,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 65,
+    "fields": {
+      "name": "Курск",
+      "is_active": true,
+      "sort_order": 65,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 66,
+    "fields": {
+      "name": "Кызыл",
+      "is_active": true,
+      "sort_order": 66,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 67,
+    "fields": {
+      "name": "Ленинск-Кузнецкий",
+      "is_active": true,
+      "sort_order": 67,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 68,
+    "fields": {
+      "name": "Липецк",
+      "is_active": true,
+      "sort_order": 68,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 69,
+    "fields": {
+      "name": "Люберцы",
+      "is_active": true,
+      "sort_order": 69,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 70,
+    "fields": {
+      "name": "Магадан",
+      "is_active": true,
+      "sort_order": 70,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 71,
+    "fields": {
+      "name": "Магас",
+      "is_active": true,
+      "sort_order": 71,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 72,
+    "fields": {
+      "name": "Магнитогорск",
+      "is_active": true,
+      "sort_order": 72,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 73,
+    "fields": {
+      "name": "Майкоп",
+      "is_active": true,
+      "sort_order": 73,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 74,
+    "fields": {
+      "name": "Малгобек",
+      "is_active": true,
+      "sort_order": 74,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 75,
+    "fields": {
+      "name": "Махачкала",
+      "is_active": true,
+      "sort_order": 75,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 76,
+    "fields": {
+      "name": "Миасс",
+      "is_active": true,
+      "sort_order": 76,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 77,
+    "fields": {
+      "name": "Москва",
+      "is_active": true,
+      "sort_order": 77,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 78,
+    "fields": {
+      "name": "Мурманск",
+      "is_active": true,
+      "sort_order": 78,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 79,
+    "fields": {
+      "name": "Мытищи",
+      "is_active": true,
+      "sort_order": 79,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 80,
+    "fields": {
+      "name": "Набережные Челны",
+      "is_active": true,
+      "sort_order": 80,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 81,
+    "fields": {
+      "name": "Назрань",
+      "is_active": true,
+      "sort_order": 81,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 82,
+    "fields": {
+      "name": "Нальчик",
+      "is_active": true,
+      "sort_order": 82,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 83,
+    "fields": {
+      "name": "Нарьян-Мар",
+      "is_active": true,
+      "sort_order": 83,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 84,
+    "fields": {
+      "name": "Находка",
+      "is_active": true,
+      "sort_order": 84,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 85,
+    "fields": {
+      "name": "Нефтекамск",
+      "is_active": true,
+      "sort_order": 85,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 86,
+    "fields": {
+      "name": "Нефтеюганск",
+      "is_active": true,
+      "sort_order": 86,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 87,
+    "fields": {
+      "name": "Нижневартовск",
+      "is_active": true,
+      "sort_order": 87,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 88,
+    "fields": {
+      "name": "Нижний Новгород",
+      "is_active": true,
+      "sort_order": 88,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 89,
+    "fields": {
+      "name": "Нижний Тагил",
+      "is_active": true,
+      "sort_order": 89,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 90,
+    "fields": {
+      "name": "Новокузнецк",
+      "is_active": true,
+      "sort_order": 90,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 91,
+    "fields": {
+      "name": "Новомосковск",
+      "is_active": true,
+      "sort_order": 91,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 92,
+    "fields": {
+      "name": "Новороссийск",
+      "is_active": true,
+      "sort_order": 92,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 93,
+    "fields": {
+      "name": "Новосибирск",
+      "is_active": true,
+      "sort_order": 93,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 94,
+    "fields": {
+      "name": "Новотроицк",
+      "is_active": true,
+      "sort_order": 94,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 95,
+    "fields": {
+      "name": "Новоуральск",
+      "is_active": true,
+      "sort_order": 95,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 96,
+    "fields": {
+      "name": "Новочебоксарск",
+      "is_active": true,
+      "sort_order": 96,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 97,
+    "fields": {
+      "name": "Новошахтинск",
+      "is_active": true,
+      "sort_order": 97,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 98,
+    "fields": {
+      "name": "Ногинск",
+      "is_active": true,
+      "sort_order": 98,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 99,
+    "fields": {
+      "name": "Норильск",
+      "is_active": true,
+      "sort_order": 99,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 100,
+    "fields": {
+      "name": "Одинцово",
+      "is_active": true,
+      "sort_order": 100,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 101,
+    "fields": {
+      "name": "Октябрьский",
+      "is_active": true,
+      "sort_order": 101,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 102,
+    "fields": {
+      "name": "Омск",
+      "is_active": true,
+      "sort_order": 102,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 103,
+    "fields": {
+      "name": "Оренбург",
+      "is_active": true,
+      "sort_order": 103,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 104,
+    "fields": {
+      "name": "Орехово-Зуево",
+      "is_active": true,
+      "sort_order": 104,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 105,
+    "fields": {
+      "name": "Орёл",
+      "is_active": true,
+      "sort_order": 105,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 106,
+    "fields": {
+      "name": "Пенза",
+      "is_active": true,
+      "sort_order": 106,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 107,
+    "fields": {
+      "name": "Первоуральск",
+      "is_active": true,
+      "sort_order": 107,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 108,
+    "fields": {
+      "name": "Пермь",
+      "is_active": true,
+      "sort_order": 108,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 109,
+    "fields": {
+      "name": "Петрозаводск",
+      "is_active": true,
+      "sort_order": 109,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 110,
+    "fields": {
+      "name": "Петропавловск-Камчатский",
+      "is_active": true,
+      "sort_order": 110,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 111,
+    "fields": {
+      "name": "Подольск",
+      "is_active": true,
+      "sort_order": 111,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 112,
+    "fields": {
+      "name": "Прокопьевск",
+      "is_active": true,
+      "sort_order": 112,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 113,
+    "fields": {
+      "name": "Псков",
+      "is_active": true,
+      "sort_order": 113,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 114,
+    "fields": {
+      "name": "Пушкино",
+      "is_active": true,
+      "sort_order": 114,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 115,
+    "fields": {
+      "name": "Пятигорск",
+      "is_active": true,
+      "sort_order": 115,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 116,
+    "fields": {
+      "name": "Раменское",
+      "is_active": true,
+      "sort_order": 116,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 117,
+    "fields": {
+      "name": "Реутов",
+      "is_active": true,
+      "sort_order": 117,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 118,
+    "fields": {
+      "name": "Ростов-на-Дону",
+      "is_active": true,
+      "sort_order": 118,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 119,
+    "fields": {
+      "name": "Рубцовск",
+      "is_active": true,
+      "sort_order": 119,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 120,
+    "fields": {
+      "name": "Рыбинск",
+      "is_active": true,
+      "sort_order": 120,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 121,
+    "fields": {
+      "name": "Рязань",
+      "is_active": true,
+      "sort_order": 121,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 122,
+    "fields": {
+      "name": "Салават",
+      "is_active": true,
+      "sort_order": 122,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 123,
+    "fields": {
+      "name": "Салехард",
+      "is_active": true,
+      "sort_order": 123,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 124,
+    "fields": {
+      "name": "Самара",
+      "is_active": true,
+      "sort_order": 124,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 125,
+    "fields": {
+      "name": "Саранск",
+      "is_active": true,
+      "sort_order": 125,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 126,
+    "fields": {
+      "name": "Саратов",
+      "is_active": true,
+      "sort_order": 126,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 127,
+    "fields": {
+      "name": "Сергиев Посад",
+      "is_active": true,
+      "sort_order": 127,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 128,
+    "fields": {
+      "name": "Серпухов",
+      "is_active": true,
+      "sort_order": 128,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 129,
+    "fields": {
+      "name": "Смоленск",
+      "is_active": true,
+      "sort_order": 129,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 130,
+    "fields": {
+      "name": "Сочи",
+      "is_active": true,
+      "sort_order": 130,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 131,
+    "fields": {
+      "name": "Ставрополь",
+      "is_active": true,
+      "sort_order": 131,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 132,
+    "fields": {
+      "name": "Старый Оскол",
+      "is_active": true,
+      "sort_order": 132,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 133,
+    "fields": {
+      "name": "Стерлитамак",
+      "is_active": true,
+      "sort_order": 133,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 134,
+    "fields": {
+      "name": "Сургут",
+      "is_active": true,
+      "sort_order": 134,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 135,
+    "fields": {
+      "name": "Сызрань",
+      "is_active": true,
+      "sort_order": 135,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 136,
+    "fields": {
+      "name": "Сыктывкар",
+      "is_active": true,
+      "sort_order": 136,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 137,
+    "fields": {
+      "name": "Таганрог",
+      "is_active": true,
+      "sort_order": 137,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 138,
+    "fields": {
+      "name": "Тамбов",
+      "is_active": true,
+      "sort_order": 138,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 139,
+    "fields": {
+      "name": "Тверь",
+      "is_active": true,
+      "sort_order": 139,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 140,
+    "fields": {
+      "name": "Тольятти",
+      "is_active": true,
+      "sort_order": 140,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 141,
+    "fields": {
+      "name": "Томск",
+      "is_active": true,
+      "sort_order": 141,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 142,
+    "fields": {
+      "name": "Тула",
+      "is_active": true,
+      "sort_order": 142,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 143,
+    "fields": {
+      "name": "Тюмень",
+      "is_active": true,
+      "sort_order": 143,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 144,
+    "fields": {
+      "name": "Улан-Удэ",
+      "is_active": true,
+      "sort_order": 144,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 145,
+    "fields": {
+      "name": "Ульяновск",
+      "is_active": true,
+      "sort_order": 145,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 146,
+    "fields": {
+      "name": "Урус-Мартан",
+      "is_active": true,
+      "sort_order": 146,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 147,
+    "fields": {
+      "name": "Уссурийск",
+      "is_active": true,
+      "sort_order": 147,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 148,
+    "fields": {
+      "name": "Уфа",
+      "is_active": true,
+      "sort_order": 148,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 149,
+    "fields": {
+      "name": "Хабаровск",
+      "is_active": true,
+      "sort_order": 149,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 150,
+    "fields": {
+      "name": "Ханты-Мансийск",
+      "is_active": true,
+      "sort_order": 150,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 151,
+    "fields": {
+      "name": "Хасавюрт",
+      "is_active": true,
+      "sort_order": 151,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 152,
+    "fields": {
+      "name": "Химки",
+      "is_active": true,
+      "sort_order": 152,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 153,
+    "fields": {
+      "name": "Чебоксары",
+      "is_active": true,
+      "sort_order": 153,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 154,
+    "fields": {
+      "name": "Челябинск",
+      "is_active": true,
+      "sort_order": 154,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 155,
+    "fields": {
+      "name": "Череповец",
+      "is_active": true,
+      "sort_order": 155,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 156,
+    "fields": {
+      "name": "Черкесск",
+      "is_active": true,
+      "sort_order": 156,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 157,
+    "fields": {
+      "name": "Чита",
+      "is_active": true,
+      "sort_order": 157,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 158,
+    "fields": {
+      "name": "Шали",
+      "is_active": true,
+      "sort_order": 158,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 159,
+    "fields": {
+      "name": "Щёлково",
+      "is_active": true,
+      "sort_order": 159,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 160,
+    "fields": {
+      "name": "Электросталь",
+      "is_active": true,
+      "sort_order": 160,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 161,
+    "fields": {
+      "name": "Элиста",
+      "is_active": true,
+      "sort_order": 161,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 162,
+    "fields": {
+      "name": "Энгельс",
+      "is_active": true,
+      "sort_order": 162,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 163,
+    "fields": {
+      "name": "Южно-Сахалинск",
+      "is_active": true,
+      "sort_order": 163,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 164,
+    "fields": {
+      "name": "Южно-Сухокумск",
+      "is_active": true,
+      "sort_order": 164,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 165,
+    "fields": {
+      "name": "Якутск",
+      "is_active": true,
+      "sort_order": 165,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 166,
+    "fields": {
+      "name": "Ярославль",
+      "is_active": true,
+      "sort_order": 166,
+      "created_at": "2024-01-01T10:00:00Z"
+    }
   }
 ]
-

@@ -1,0 +1,192 @@
+{% load static %}
+
+{# Модальное окно для подтверждения определенного по IP города #}
+{% if show_city_confirmation and detected_city %}
+<div class="modal fade" tabindex="-1" aria-labelledby="confirm-city" aria-hidden="true" id="confirm-city" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="title-3 mb-2">Определен ваш город</div>
+        <p class="mb-3">Мы определили, что вы находитесь в городе <strong>{{ detected_city.name }}</strong>. Это правильно?</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" id="confirm-city-btn">Да, верно</button>
+          <button class="btn btn-outline-secondary flex-fill" data-bs-toggle="modal" data-bs-target="#choose-city" data-bs-dismiss="modal">Выбрать другой</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Автоматически показываем модальное окно подтверждения при загрузке страницы
+  document.addEventListener('DOMContentLoaded', function() {
+    var confirmCityBtn = document.getElementById('confirm-city-btn');
+    if (confirmCityBtn) {
+      confirmCityBtn.addEventListener('click', confirmDetectedCity);
+    }
+    
+    var confirmModalEl = document.getElementById('confirm-city');
+    if (confirmModalEl) {
+      var confirmModal = new bootstrap.Modal(confirmModalEl);
+      confirmModal.show();
+    }
+  });
+</script>
+{% endif %}
+
+{# Модальное окно для выбора города #}
+<div class="modal fade" tabindex="-1" aria-labelledby="choose-city" aria-hidden="true" id="choose-city">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="title-3 mb-2">Выберите город</div>
+        <select class="chosen" id="city-select" name="city" data-placeholder="Ваш город">
+          <option></option>
+        </select>
+        <button class="btn btn-primary w-100 mt-2" id="city-submit-btn">Перейти</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  function getCsrfToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]')?.value || getCookie('csrftoken');
+  }
+
+  // Загружаем список городов при открытии модального окна
+  document.addEventListener('DOMContentLoaded', function() {
+    var cityModal = document.getElementById('choose-city');
+    if (cityModal) {
+      cityModal.addEventListener('show.bs.modal', function() {
+        loadCitiesList();
+      });
+    }
+    
+    // Добавляем обработчик для кнопки "Перейти"
+    var submitBtn = document.getElementById('city-submit-btn');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', setCity);
+    }
+  });
+
+  function loadCitiesList() {
+    fetch('{% url "core:cities-list" %}')
+      .then(response => response.json())
+      .then(data => {
+        var select = document.getElementById('city-select');
+        if (select && data.cities) {
+          // Очищаем select, оставляя первый пустой option
+          select.innerHTML = '<option></option>';
+          
+          var currentCityId = {% if current_city %}{{ current_city.id }}{% else %}null{% endif %};
+          
+          // Добавляем города
+          data.cities.forEach(function(city) {
+            var option = document.createElement('option');
+            option.value = city.id;
+            option.textContent = city.name;
+            // Выделяем текущий город
+            if (currentCityId && city.id == currentCityId) {
+              option.selected = true;
+            }
+            select.appendChild(option);
+          });
+          
+          // Инициализируем chosen, если он используется
+          if (typeof jQuery !== 'undefined' && jQuery().chosen) {
+            jQuery(select).trigger('chosen:updated');
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при загрузке списка городов:', error);
+      });
+  }
+
+  function setCity() {
+    var select = document.getElementById('city-select');
+    var cityId = select.value;
+    
+    if (!cityId) {
+      alert('Пожалуйста, выберите город');
+      return;
+    }
+    
+    var formData = new FormData();
+    formData.append('city_id', cityId);
+    
+    fetch('{% url "core:set-city" %}', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': getCsrfToken()
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Закрываем модальное окно
+        var modal = bootstrap.Modal.getInstance(document.getElementById('choose-city'));
+        if (modal) {
+          modal.hide();
+        }
+        // Перезагружаем страницу для обновления города в header
+        location.reload();
+      } else {
+        alert('Ошибка: ' + (data.error || 'Не удалось установить город'));
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Произошла ошибка при установке города');
+    });
+  }
+
+  function confirmDetectedCity() {
+    var formData = new FormData();
+    
+    fetch('{% url "core:confirm-city" %}', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': getCsrfToken()
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Закрываем модальное окно
+        var modal = bootstrap.Modal.getInstance(document.getElementById('confirm-city'));
+        if (modal) {
+          modal.hide();
+        }
+        // Перезагружаем страницу для обновления города в header
+        location.reload();
+      } else {
+        alert('Ошибка при подтверждении города');
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка:', error);
+      alert('Произошла ошибка при подтверждении города');
+    });
+  }
+</script>
+

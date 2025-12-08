@@ -127,48 +127,64 @@
             </div>
           {% endif %}
           <script>
+            function getCookie(name) {
+              let cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                  }
+                }
+              }
+              return cookieValue;
+            }
+            
+            function getCsrfToken() {
+              return document.querySelector('[name=csrfmiddlewaretoken]')?.value || getCookie('csrftoken');
+            }
+            
             function addToCart(productId) {
-              var quantity = document.getElementById('quantity-input').value;
-              // TODO: Реализовать добавление в корзину
-              alert('Товар добавлен в корзину (функция в разработке)');
+              var quantity = parseInt(document.getElementById('quantity-input').value) || 1;
+              if (quantity < 1) {
+                quantity = 1;
+                document.getElementById('quantity-input').value = 1;
+              }
+              
+              const formData = new FormData();
+              formData.append('quantity', quantity);
+              
+              fetch(`{% url 'cart:add' product_id=0 %}`.replace('0', productId), {
+                method: 'POST',
+                headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'X-CSRFToken': getCsrfToken()
+                },
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // Показываем уведомление об успешном добавлении
+                  alert(data.message);
+                  // Можно обновить счетчик корзины в хедере, если он есть
+                  // Например: document.getElementById('cart-count').textContent = data.cart_total_quantity;
+                } else {
+                  alert('Произошла ошибка при добавлении товара в корзину');
+                }
+              })
+              .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при добавлении товара в корзину');
+              });
             }
           </script>
         </div>
 {% endblock %}
 
 {% block modals %}
-    <div class="modal fade" tabindex="-1" aria-labelledby="choose-city" aria-hidden="true" id="choose-city">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="title-3 mb-2">Выберите город</div>
-            <select class="chosen" name="" data-placeholder="Ваш город">
-              <option></option>
-              <option>Красноярск</option>
-              <option>Тюмень</option>
-              <option>Красноярск</option>
-              <option>Томск</option>
-              <option>Красноярск</option>
-              <option>Уфа</option>
-              <option>Красноярск</option>
-              <option>Тюмень</option>
-              <option>Красноярск</option>
-              <option>Томск</option>
-              <option>Красноярск</option>
-              <option>Уфа</option>
-              <option>Красноярск</option>
-              <option>Тюмень</option>
-              <option>Красноярск</option>
-              <option>Томск</option>
-              <option>Красноярск</option>
-              <option>Уфа</option>
-            </select>
-            <button class="btn btn-primary w-100 mt-2">Перейти</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="modal fade" tabindex="-1" aria-labelledby="order-partner" aria-hidden="true" id="order-partner">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">

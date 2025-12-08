@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.CityDetectionMiddleware',
 ]
 
 ROOT_URLCONF = 'retouch_marketplace.urls'
@@ -77,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.site_settings',
                 'core.context_processors.catalog_categories',
+                'core.context_processors.cart_quantity',
+                'core.context_processors.current_city',
+                'core.context_processors.detected_city',
             ],
         },
     },

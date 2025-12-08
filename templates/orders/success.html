@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Заказ оформлен - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Заказ оформлен</li>
+      </ol>
+    </nav>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card p-md-4 p-3 rounded-3 text-center">
+          <div class="mb-3">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: #28a745;">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M8 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 class="title-2 mb-3">Заказ успешно оформлен!</h2>
+          <p class="mb-2">Номер вашего заказа: <strong>#{{ order.id }}</strong></p>
+          <p class="text-muted mb-3">Вся информация о заказе отправлена вам на почту <strong>{{ order.email }}</strong></p>
+          <p class="mb-4">В ближайшее время с вами свяжется поставщик.</p>
+          <div class="d-flex gap-2 justify-content-center flex-wrap">
+            <a class="btn btn-primary" href="{% url 'catalog:catalog' %}">Продолжить покупки</a>
+            <a class="btn btn-outline-primary" href="{% url 'core:index' %}">На главную</a>
+          </div>
+          {% if order.comment %}
+            <hr class="my-3">
+            <div class="text-start">
+              <p class="mb-1"><strong>Ваш комментарий:</strong></p>
+              <p class="text-muted">{{ order.comment }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

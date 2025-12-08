@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Category, Product
+from core.models import City
+from core.utils import get_default_city
 
 # Create your views here.
 def catalog(request):
@@ -17,13 +19,28 @@ def catalog(request):
     
     order_by = sort_options.get(sort_by, '-created_at')
     
+    # Получаем текущий город из сессии
+    city_id = request.session.get('selected_city_id')
+    current_city = None
+    if city_id:
+        try:
+            current_city = City.objects.filter(id=city_id, is_active=True).first()
+        except City.DoesNotExist:
+            pass
+    
+    # Если город не выбран, используем город по умолчанию
+    if not current_city:
+        current_city = get_default_city()
+    
     # Если есть поисковый запрос, показываем результаты поиска
     if search_query:
-        # Поиск по названию товара (без учета регистра)
+        # Поиск по названию товара (без учета регистра), отфильтрованные по городу продавца
         products = Product.objects.filter(
             Q(name__icontains=search_query) | Q(description__icontains=search_query),
-            is_active=True
-        ).prefetch_related('images').order_by(order_by)
+            is_active=True,
+            seller__isnull=False,  # Только товары с продавцом
+            seller__city=current_city  # Фильтруем по городу продавца
+        ).select_related('seller').prefetch_related('images').order_by(order_by)
         
         context = {
             'categories_with_products': [],
@@ -36,13 +53,15 @@ def catalog(request):
         # Получаем все родительские категории (без родителя)
         categories = Category.objects.filter(parent__isnull=True).order_by('name')
         
-        # Для каждой категории получаем активные товары с изображениями
+        # Для каждой категории получаем активные товары с изображениями, отфильтрованные по городу продавца
         categories_with_products = []
         for category in categories:
             products = Product.objects.filter(
                 category=category,
-                is_active=True
-            ).prefetch_related('images').order_by(order_by)[:12]  # Ограничиваем до 12 товаров на категорию
+                is_active=True,
+                seller__isnull=False,  # Только товары с продавцом
+                seller__city=current_city  # Фильтруем по городу продавца
+            ).select_related('seller').prefetch_related('images').order_by(order_by)[:12]  # Ограничиваем до 12 товаров на категорию
             
             if products.exists():
                 categories_with_products.append({
@@ -64,11 +83,26 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id, is_active=True)
     product.images_list = product.images.all().order_by('sort_order', 'id')
     
-    # Получаем связанные товары из той же категории
+    # Получаем текущий город из сессии
+    city_id = request.session.get('selected_city_id')
+    current_city = None
+    if city_id:
+        try:
+            current_city = City.objects.filter(id=city_id, is_active=True).first()
+        except City.DoesNotExist:
+            pass
+    
+    # Если город не выбран, используем город по умолчанию
+    if not current_city:
+        current_city = get_default_city()
+    
+    # Получаем связанные товары из той же категории, отфильтрованные по городу продавца
     related_products = Product.objects.filter(
         category=product.category,
-        is_active=True
-    ).exclude(id=product.id).prefetch_related('images')[:4]
+        is_active=True,
+        seller__isnull=False,  # Только товары с продавцом
+        seller__city=current_city  # Фильтруем по городу продавца
+    ).exclude(id=product.id).select_related('seller').prefetch_related('images')[:4]
     
     context = {
         'product': product,

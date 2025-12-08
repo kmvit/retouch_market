@@ -13,5 +13,8 @@ urlpatterns = [
     path('contacts/', views.static_page, {'page_slug': 'contacts'}, name='contacts'),
     path('requisites/', views.static_page, {'page_slug': 'requisites'}, name='requisites'),
     path('privacy/', views.static_page, {'page_slug': 'privacy'}, name='privacy'),
+    path('set-city/', views.set_city, name='set-city'),
+    path('confirm-city/', views.confirm_detected_city, name='confirm-city'),
+    path('cities-list/', views.get_cities_list, name='cities-list'),
 ]
 

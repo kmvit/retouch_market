@@ -35,5 +35,8 @@ urlpatterns = [
 # Для временного решения раздаем медиа и при DEBUG=False
 # Для отключения раздачи через Django установите DJANGO_SERVE_MEDIA=false
 serve_media = os.getenv('DJANGO_SERVE_MEDIA', 'true').lower() in ('1', 'true', 'yes')
-if settings.DEBUG or serve_media:
+
+# Всегда добавляем раздачу медиа-файлов (даже в продакшене, если не настроен веб-сервер)
+# Это необходимо для работы загруженных изображений
+if serve_media:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

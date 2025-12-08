@@ -13,111 +13,105 @@
         <li class="breadcrumb-item active" aria-current="page">Оформление заказа</li>
       </ol>
     </nav>
-          <form class="card p-2 rounded-3">
-            <div class="row"> 
-              <div class="col-md-12">
-                <div class="cart-elem">
-                  <div class="cart-elem__img"><img src="{% static 'img/gallery-2.jpg' %}" alt=""></div>
-                  <div class="cart-elem__content">
-                    <div class="mb-1"><a class="title-3" href="{% url 'catalog:detail' product_id=1 %}">Название</a></div>
-                    <div class="row">
-                      <div class="col-auto mb-1">Информация 1
-                      </div>
-                      <div class="col-auto mb-1">Информация 2
-                      </div>
-                      <div class="col-auto mb-1">Информация 3
-                      </div>
-                      <div class="col-auto mb-1">Информация 4
-                      </div>
-                      <div class="col-auto mb-1">Информация 5
-                      </div>
-                      <div class="col-auto mb-1">Информация 6
-                      </div>
-                    </div>
-                    <div class="cart-elem__total">
-                      <div>Всего:</div>
-                      <div class="_old">30 000 рублей</div>
-                      <div>28 000 рублей</div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-2">
-                <div class="row row-cols-md-2 row-cols-1">
-                  <div class="col pe-md-2">
-                    <label class="mb-1">
-                      <p class="form-label">Фамилия</p>
-                      <input class="form-control" type="text" placeholder="Фамилия" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Имя</p>
-                      <input class="form-control" type="text" placeholder="Имя" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Отчество</p>
-                      <input class="form-control" type="text" placeholder="Отчество" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Почта</p>
-                      <input class="form-control" type="text" placeholder="Почта" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Номер</p>
-                      <input class="form-control" type="text" placeholder="Номер" required>
-                    </label>
-                  </div>
-                  <div class="col ps-md-2 border-md-start">
-                    <div class="row">
-                      <div class="col-auto mb-1">
-                        <label>
-                          <input type="radio" name="delivery" hidden>
-                          <div class="label-check">Доставка</div>
-                        </label>
-                      </div>
-                      <div class="col-auto mb-1">
-                        <label>
-                          <input type="radio" name="delivery" hidden>
-                          <div class="label-check">Самовывоз</div>
-                        </label>
-                      </div>
-                    </div>
-                    <label class="mb-1">
-                      <p class="form-label">Адрес доставки</p>
-                      <textarea class="form-control" type="text" placeholder="Адрес доставки" required></textarea>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Поле</p>
-                      <input class="form-control" type="text" placeholder="Поле" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Поле</p>
-                      <input class="form-control" type="text" placeholder="Поле" required>
-                    </label>
-                    <label class="mb-1">
-                      <p class="form-label">Поле</p>
-                      <input class="form-control" type="text" placeholder="Поле" required>
-                    </label>
-                  </div>
-                </div>
-                <hr class="my-2">
+    <form method="post" class="card p-2 rounded-3">
+      {% csrf_token %}
+      <div class="row"> 
+        <div class="col-md-12">
+          {% for item in cart_items %}
+            <div class="cart-elem mb-2">
+              <div class="cart-elem__img">
+                {% if item.product.images.all %}
+                  {% with main_image=item.product.images.all|first %}
+                    <img src="{{ main_image.image.url }}" alt="{{ main_image.alt_text|default:item.product.name }}">
+                  {% endwith %}
+                {% else %}
+                  <img src="{% static 'img/item.svg' %}" alt="{{ item.product.name }}">
+                {% endif %}
               </div>
-              <div class="col-xl-4 col-lg-5 col-md-6">
-                <div class="title-3">Итого</div>
-                <hr>
-                <div class="row justify-content-between text-blue-dark">
-                  <div class="col-auto">Всего:</div>
-                  <div class="col-auto">28 000 рублей</div>
+              <div class="cart-elem__content">
+                <div class="mb-1">
+                  <a class="title-3" href="{% url 'catalog:detail' product_id=item.product.id %}">{{ item.product.name }}</a>
                 </div>
-                <div class="mt-2">
-                  <label>
-                    <input type="checkbox" hidden>
-                    <div class="label-check">Я согласен с политикой конфиденциальности </div>
-                  </label>
+                <div class="row">
+                  {% if item.product.category %}
+                    <div class="col-auto mb-1">Категория: {{ item.product.category.name }}</div>
+                  {% endif %}
+                  {% if item.product.color %}
+                    <div class="col-auto mb-1">Цвет: {{ item.product.get_color_display }}</div>
+                  {% endif %}
+                  {% if item.product.shape %}
+                    <div class="col-auto mb-1">Форма: {{ item.product.get_shape_display }}</div>
+                  {% endif %}
+                  <div class="col-auto mb-1">Количество: {{ item.quantity }}</div>
                 </div>
-                <button class="btn btn-primary mt-1 w-100" data-bs-toggle="modal" data-bs-target="#pay-success">Оплатить</button>
+                <div class="cart-elem__total">
+                  <div>Всего:</div>
+                  {% if item.old_total_price %}
+                    <div class="_old">{{ item.old_total_price|floatformat:2 }} руб.</div>
+                  {% endif %}
+                  <div>{{ item.total_price|floatformat:2 }} руб.</div>
+                </div>
               </div>
             </div>
-          </form>
+          {% endfor %}
+          <hr class="my-2">
+          <div class="row row-cols-md-2 row-cols-1">
+            <div class="col pe-md-2">
+              <label class="mb-1">
+                <p class="form-label">Фамилия</p>
+                <input class="form-control" type="text" name="last_name" placeholder="Фамилия" value="{{ form_data.last_name|default:'' }}" required>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Имя</p>
+                <input class="form-control" type="text" name="first_name" placeholder="Имя" value="{{ form_data.first_name|default:'' }}" required>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Отчество</p>
+                <input class="form-control" type="text" name="middle_name" placeholder="Отчество" value="{{ form_data.middle_name|default:'' }}">
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Почта *</p>
+                <input class="form-control" type="email" name="email" placeholder="Почта" value="{{ form_data.email|default:'' }}" required>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Номер телефона</p>
+                <input class="form-control" type="tel" name="phone" placeholder="Номер телефона" value="{{ form_data.phone|default:'' }}">
+              </label>
+            </div>
+            <div class="col ps-md-2 border-md-start">
+              <label class="mb-1">
+                <p class="form-label">Адрес доставки</p>
+                <textarea class="form-control" name="address" placeholder="Адрес доставки" rows="3">{{ form_data.address|default:'' }}</textarea>
+              </label>
+              <label class="mb-1">
+                <p class="form-label">Комментарий к заказу</p>
+                <textarea class="form-control" name="comment" placeholder="Комментарий к заказу (необязательно)" rows="3">{{ form_data.comment|default:'' }}</textarea>
+              </label>
+            </div>
+          </div>
+          <hr class="my-2">
         </div>
+        <div class="col-xl-4 col-lg-5 col-md-6">
+          <div class="title-3">Итого</div>
+          <hr>
+          <div class="row justify-content-between text-blue-dark mb-2">
+            <div class="col-auto">Товаров:</div>
+            <div class="col-auto">{{ cart.total_quantity }}</div>
+          </div>
+          <div class="row justify-content-between text-blue-dark">
+            <div class="col-auto">Всего:</div>
+            <div class="col-auto">{{ cart.total_amount|floatformat:2 }} рублей</div>
+          </div>
+          <div class="mt-2">
+            <label>
+              <input type="checkbox" name="privacy_policy" hidden required>
+              <div class="label-check">Я согласен с политикой конфиденциальности *</div>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary mt-1 w-100">Оформить заказ</button>
+        </div>
+      </div>
+    </form>
   </div>
 {% endblock %}
 

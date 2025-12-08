@@ -1,4 +1,5 @@
-from .models import SiteSettings
+from .models import SiteSettings, City
+from .utils import get_default_city
 
 
 def site_settings(request):
@@ -23,5 +24,46 @@ def catalog_categories(request):
     except Exception:
         # Если модель Category еще не создана или есть ошибка, возвращаем пустой список
         return {"catalog_categories": []}
+
+
+def cart_quantity(request):
+    """Добавляет количество товаров в корзине в контекст всех шаблонов"""
+    try:
+        from cart.utils import get_or_create_cart
+        cart = get_or_create_cart(request)
+        cart_quantity = cart.total_quantity
+        return {"cart_quantity": cart_quantity}
+    except Exception:
+        return {"cart_quantity": 0}
+
+
+def current_city(request):
+    """Добавляет текущий город в контекст всех шаблонов"""
+    try:
+        city_id = request.session.get('selected_city_id')
+        if city_id:
+            city = City.objects.filter(id=city_id, is_active=True).first()
+            if city:
+                return {"current_city": city}
+        
+        # Если город не выбран, используем город по умолчанию
+        default_city = get_default_city()
+        return {"current_city": default_city}
+    except Exception:
+        default_city = get_default_city()
+        return {"current_city": default_city}
+
+
+def detected_city(request):
+    """Добавляет определенный по IP город для подтверждения"""
+    # Показываем модальное окно только если город еще не подтвержден
+    if 'city_confirmed' not in request.session:
+        detected_city_id = request.session.get('detected_city_id')
+        if detected_city_id:
+            city = City.objects.filter(id=detected_city_id, is_active=True).first()
+            if city:
+                return {"detected_city": city, "show_city_confirmation": True}
+    
+    return {"detected_city": None, "show_city_confirmation": False}
 
 
