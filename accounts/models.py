@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import secrets
 import string
+import base64
+import hashlib
 
 
 class User(AbstractUser):
@@ -23,6 +25,60 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return self.get_username()
+
+    def get_initials(self):
+        """Получает инициалы пользователя"""
+        initials = ""
+        if self.first_name:
+            initials += self.first_name[0].upper()
+        if self.last_name:
+            initials += self.last_name[0].upper()
+        if not initials and self.username:
+            initials = self.username[0].upper()
+        return initials or "U"
+
+    def get_avatar_color(self):
+        """Генерирует цвет для аватара на основе имени пользователя"""
+        # Используем хеш имени для генерации стабильного цвета
+        name = self.get_full_name() or self.username
+        hash_obj = hashlib.md5(name.encode())
+        hash_int = int(hash_obj.hexdigest(), 16)
+        
+        # Генерируем приятные цвета (не слишком темные и не слишком светлые)
+        colors = [
+            "#2196F3",  # Синий
+            "#4CAF50",  # Зеленый
+            "#FF9800",  # Оранжевый
+            "#9C27B0",  # Фиолетовый
+            "#F44336",  # Красный
+            "#00BCD4",  # Голубой
+            "#FF5722",  # Глубокий оранжевый
+            "#795548",  # Коричневый
+            "#607D8B",  # Сине-серый
+            "#E91E63",  # Розовый
+        ]
+        return colors[hash_int % len(colors)]
+
+    def get_avatar_svg(self, size=40):
+        """Генерирует SVG аватар с инициалами"""
+        initials = self.get_initials()
+        color = self.get_avatar_color()
+        
+        svg = f'''<svg width="{size}" height="{size}" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="{size//2}" cy="{size//2}" r="{size//2}" fill="{color}"/>
+            <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="{size//2.5}" 
+                  font-weight="bold" fill="white" text-anchor="middle" 
+                  dominant-baseline="central">{initials}</text>
+        </svg>'''
+        
+        # Кодируем в data URI
+        encoded = base64.b64encode(svg.encode('utf-8')).decode('utf-8')
+        return f"data:image/svg+xml;base64,{encoded}"
+
+    @property
+    def avatar_svg(self):
+        """Property для использования в шаблонах"""
+        return self.get_avatar_svg()
 
     class Meta:
         verbose_name = "Пользователь"
