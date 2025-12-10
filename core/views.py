@@ -3,8 +3,6 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from catalog.models import Category, Product
-from .models import City
-from .utils import get_default_city
 
 # Create your views here.
 def index(request):
@@ -20,30 +18,16 @@ def index(request):
     
     order_by = sort_options.get(sort_by, '-created_at')
     
-    # Получаем текущий город из сессии
-    city_id = request.session.get('selected_city_id')
-    current_city = None
-    if city_id:
-        try:
-            current_city = City.objects.filter(id=city_id, is_active=True).first()
-        except City.DoesNotExist:
-            pass
-    
-    # Если город не выбран, используем город по умолчанию
-    if not current_city:
-        current_city = get_default_city()
-    
     # Получаем все родительские категории (без родителя)
     categories = Category.objects.filter(parent__isnull=True).order_by('name')[:5]  # Ограничиваем до 5 категорий для табов
     
-    # Для каждой категории получаем активные товары с изображениями, отфильтрованные по городу продавца
+    # Для каждой категории получаем активные товары с изображениями, все товары со всех городов
     categories_with_products = []
     for category in categories:
         products = Product.objects.filter(
             category=category,
             is_active=True,
-            seller__isnull=False,  # Только товары с продавцом
-            seller__city=current_city  # Фильтруем по городу продавца
+            seller__isnull=False  # Только товары с продавцом
         ).select_related('seller').prefetch_related('images').order_by(order_by)[:8]  # Ограничиваем до 8 товаров на категорию
         
         if products.exists():
