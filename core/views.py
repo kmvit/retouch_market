@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from catalog.models import Category, Product
+from .models import City
 
 # Create your views here.
 def index(request):
@@ -99,8 +100,15 @@ def confirm_detected_city(request):
     return JsonResponse({'success': True})
 
 
+@csrf_exempt
 def get_cities_list(request):
     """Возвращает список всех активных городов для выпадающего списка"""
-    cities = City.objects.filter(is_active=True).order_by('sort_order', 'name')
-    cities_list = [{'id': city.id, 'name': city.name} for city in cities]
-    return JsonResponse({'cities': cities_list})
+    try:
+        cities = City.objects.filter(is_active=True).order_by('sort_order', 'name')
+        cities_list = [{'id': city.id, 'name': city.name} for city in cities]
+        return JsonResponse({'cities': cities_list})
+    except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Ошибка при получении списка городов: {str(e)}", exc_info=True)
+        return JsonResponse({'cities': [], 'error': str(e)}, status=500)
