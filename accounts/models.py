@@ -17,9 +17,9 @@ class User(AbstractUser):
         blank=True,
         verbose_name=_("Город")
     )
-    product_position = models.CharField(max_length=255, blank=True, verbose_name=_("Позиция товара"))
     legal_form = models.CharField(max_length=50, blank=True, verbose_name=_("ИП или ООО"))
     passport_data = models.TextField(blank=True, verbose_name=_("Паспортные данные"))
+    is_verified = models.BooleanField(default=False, verbose_name=_("Верифицирован"))
 
     def __str__(self) -> str:
         return self.get_username()

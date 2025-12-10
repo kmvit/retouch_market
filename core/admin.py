@@ -20,7 +20,7 @@ class CityAdmin(admin.ModelAdmin):
 
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
-    list_display = ("phone", "email",)
+    list_display = ("phone", "email", "address",)
 
     def has_add_permission(self, request):
         # Разрешаем создать запись только если её ещё нет

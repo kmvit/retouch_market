@@ -16,7 +16,6 @@
       "is_active": true,
       "date_joined": "2024-01-01T10:00:00Z",
       "city": 1,
-      "product_position": "Администратор",
       "legal_form": "",
       "passport_data": ""
     }
@@ -38,7 +37,6 @@
       "is_active": true,
       "date_joined": "2024-01-02T10:00:00Z",
       "city": 1,
-      "product_position": "Продавец ретуши",
       "legal_form": "ИП",
       "passport_data": "1234 567890"
     }
@@ -60,7 +58,6 @@
       "is_active": true,
       "date_joined": "2024-01-03T10:00:00Z",
       "city": 2,
-      "product_position": "Специалист по ретуши",
       "legal_form": "ООО",
       "passport_data": "2345 678901"
     }
@@ -82,7 +79,6 @@
       "is_active": true,
       "date_joined": "2024-01-04T10:00:00Z",
       "city": 3,
-      "product_position": "",
       "legal_form": "",
       "passport_data": ""
     }

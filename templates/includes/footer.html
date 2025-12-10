@@ -18,9 +18,15 @@
       </div>
       <div class="col my-1">
         <p class="text-blue-dark">О КОМПАНИИ</p>
-        <p><a href="">8 800 567 87 89</a></p>
-        <p><a href="">ritualnyeuslugi@yandex.ru</a></p>
-        <p><span>ул. Пушкина, дом. Колотушкина</span></p>
+        {% if site_settings.phone %}
+          <p><a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a></p>
+        {% endif %}
+        {% if site_settings.email %}
+          <p><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></p>
+        {% endif %}
+        {% if site_settings.address %}
+          <p><span>{{ site_settings.address }}</span></p>
+        {% endif %}
         <div class="socials mt-2"><a href=""><img src="{% static 'img/inst.svg' %}" alt=""></a><a href=""><img src="{% static 'img/yt.svg' %}" alt=""></a><a href=""><img src="{% static 'img/vk.svg' %}" alt=""></a></div>
       </div>
     </div>

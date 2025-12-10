@@ -6,6 +6,11 @@
 {% block content %}
   <div class="account">
     <div class="container">
+      {% if not user.is_verified %}
+      <div class="alert alert-info my-2">
+        <strong>Информация:</strong> Вы можете просматривать каталог, но добавление и редактирование товаров будет доступно после верификации аккаунта администратором.
+      </div>
+      {% endif %}
       <div class="row justify-content-between">
         <div class="col-auto">
           <div class="title-2 mt-0">Каталог</div>
@@ -33,17 +38,28 @@
         {% if selected_category %}
         <div class="tab-pane fade active show" id="category-{{ selected_category.id }}" role="tabpanel">
           <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2">
+            {% if user.is_verified %}
             <div class="col"><a class="card-add-new" href="#" data-bs-toggle="modal" data-bs-target="#add-product-modal" data-category-id="{{ selected_category.id }}">
                 <div class="card-add-new__img"><img src="{% static 'img/add-new.svg' %}" alt=""/></div>
                 <div class="card-add-new__title">Добавить новую позицию</div></a></div>
+            {% else %}
+            <div class="col">
+              <div class="card-add-new" style="opacity: 0.5; cursor: not-allowed;" title="Функция недоступна до верификации аккаунта">
+                <div class="card-add-new__img"><img src="{% static 'img/add-new.svg' %}" alt=""/></div>
+                <div class="card-add-new__title">Добавить новую позицию</div>
+              </div>
+            </div>
+            {% endif %}
             {% for product in products %}
             <div class="col" data-product-id="{{ product.id }}">
               <div class="card-product">
+                {% if user.is_verified %}
                 <div class="card-product__remove" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" title="Удалить товар" style="cursor: pointer;">
                   <svg>
                     <use xlink:href="#close"></use>
                   </svg>
                 </div>
+                {% endif %}
                 <div class="card-product__img">
                   <div>
                     {% if product.images.all %}
@@ -427,6 +443,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Обработка открытия модального окна - установка категории из data-атрибута
   if (addProductModal) {
     addProductModal.addEventListener('show.bs.modal', function(event) {
+      {% if not user.is_verified %}
+      event.preventDefault();
+      alert('Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.');
+      return false;
+      {% else %}
       const button = event.relatedTarget;
       if (button && button.dataset.categoryId) {
         const categoryId = button.dataset.categoryId;
@@ -435,6 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
           categorySelect.value = categoryId;
         }
       }
+      {% endif %}
     });
   }
   
@@ -724,6 +746,11 @@ document.addEventListener('DOMContentLoaded', function() {
     button.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      
+      {% if not user.is_verified %}
+      alert('Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.');
+      return false;
+      {% endif %}
       
       const productId = this.dataset.productId;
       const productName = this.dataset.productName || 'товар';

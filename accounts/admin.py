@@ -7,15 +7,15 @@ from .models import User, AuthCode, Company
 
 @admin.register(User)
 class UserAdmin(DjangoUserAdmin):
-    list_display = ("username", "email", "first_name", "last_name", "city", "is_seller", "is_staff", "is_active")
-    list_filter = ("is_seller", "is_staff", "is_active", "city")
+    list_display = ("username", "email", "first_name", "last_name", "city", "is_seller", "is_verified", "is_staff", "is_active")
+    list_filter = ("is_seller", "is_verified", "is_staff", "is_active", "city")
     fieldsets = (
         (None, {"fields": ("username", "password")} ),
         ("Personal info", {
             "fields": ("first_name", "last_name", "middle_name", "email", "phone", "city")
         }),
         ("Partner info", {
-            "fields": ("product_position", "legal_form", "passport_data"),
+            "fields": ("legal_form", "passport_data", "is_verified"),
             "classes": ("collapse",)
         }),
         ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser", "is_seller", "groups", "user_permissions")} ),

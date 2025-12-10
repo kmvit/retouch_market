@@ -69,6 +69,13 @@ class AccountView(LoginRequiredMixin, View):
                 'message': 'Требуется авторизация'
             }, status=401)
         
+        # Проверка верификации
+        if not request.user.is_verified:
+            return JsonResponse({
+                'success': False,
+                'message': 'Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.'
+            }, status=403)
+        
         try:
             data = json.loads(request.body)
             user = request.user
@@ -126,6 +133,13 @@ class AccountView(LoginRequiredMixin, View):
                 'success': False,
                 'message': 'Требуется авторизация'
             }, status=401)
+        
+        # Проверка верификации
+        if not request.user.is_verified:
+            return JsonResponse({
+                'success': False,
+                'message': 'Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.'
+            }, status=403)
         
         try:
             data = json.loads(request.body)
@@ -192,6 +206,8 @@ class AccountView(LoginRequiredMixin, View):
                 'success': False,
                 'message': 'Требуется авторизация'
             }, status=401)
+        
+        # Смена пароля доступна всегда, даже без верификации
         
         try:
             data = json.loads(request.body)
@@ -296,6 +312,7 @@ def account_catalog(request):
     """Страница каталога в личном кабинете"""
     from catalog.models import Category, Product
     
+    # Проверка верификации - страница доступна, но функционал будет заблокирован
     # Получаем все родительские категории
     categories = Category.objects.filter(parent__isnull=True).order_by('name')
     
@@ -329,6 +346,7 @@ def account_catalog(request):
         'catalog_categories': categories,
         'selected_category': selected_category,
         'products': products,
+        'is_verified': request.user.is_verified,
     }
     return render(request, 'accounts/account-catalog.html', context)
 
@@ -340,6 +358,13 @@ def add_product(request):
     import logging
     
     logger = logging.getLogger(__name__)
+    
+    # Проверка верификации
+    if not request.user.is_verified:
+        return JsonResponse({
+            'success': False,
+            'message': 'Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.'
+        }, status=403)
     
     try:
         # Получаем данные из формы (FormData)
@@ -468,6 +493,13 @@ def delete_product(request, product_id):
     import logging
     
     logger = logging.getLogger(__name__)
+    
+    # Проверка верификации
+    if not request.user.is_verified:
+        return JsonResponse({
+            'success': False,
+            'message': 'Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.'
+        }, status=403)
     
     try:
         # Получаем товар и проверяем, что он принадлежит текущему пользователю
