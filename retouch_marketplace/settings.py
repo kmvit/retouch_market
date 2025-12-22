@@ -81,6 +81,7 @@ TEMPLATES = [
                 'core.context_processors.cart_quantity',
                 'core.context_processors.current_city',
                 'core.context_processors.detected_city',
+                'core.context_processors.latest_products',
             ],
         },
     },

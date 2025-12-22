@@ -67,3 +67,18 @@ def detected_city(request):
     return {"detected_city": None, "show_city_confirmation": False}
 
 
+def latest_products(request):
+    """Добавляет последние товары в контекст всех шаблонов"""
+    try:
+        from catalog.models import Product
+        # Получаем последние 4 активных товара с продавцом
+        products = Product.objects.filter(
+            is_active=True,
+            seller__isnull=False
+        ).order_by('-created_at')[:4]
+        return {"latest_products": products}
+    except Exception:
+        # Если модель Product еще не создана или есть ошибка, возвращаем пустой список
+        return {"latest_products": []}
+
+

@@ -11,10 +11,9 @@
       </div>
       <div class="col my-1">
         <p class="text-blue-dark">ТОВАР</p>
-        <p><a href="">Позиция товара 1</a></p>
-        <p><a href="">Позиция товара 2</a></p>
-        <p><a href="">Позиция товара 3</a></p>
-        <p><a href="">Позиция товара 4</a></p>
+        {% for product in latest_products %}
+          <p><a href="{% url 'catalog:detail' product_id=product.id %}">{{ product.name }}</a></p>
+        {% endfor %}
       </div>
       <div class="col my-1">
         <p class="text-blue-dark">О КОМПАНИИ</p>
