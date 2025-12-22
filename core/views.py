@@ -40,9 +40,9 @@ def index(request):
     
     # Получаем SEO данные для главной страницы
     seo_context = get_seo_context(
-        default_title='Haron Market - Маркетплейс товаров',
-        default_description='Haron Market - удобный маркетплейс для покупки товаров. Большой выбор товаров по выгодным ценам.',
-        default_keywords='маркетплейс, товары, покупки, интернет магазин'
+        default_title='Haron Market - Интернет-магазин ритуальных товаров',
+        default_description='Haron Market - удобный Интернет-магазин для покупки ритуальных товаров. Большой выбор товаров по выгодным ценам.',
+        default_keywords='маркетплейс, ритуальные товары, покупки, интернет магазин'
     )
     
     context = {
