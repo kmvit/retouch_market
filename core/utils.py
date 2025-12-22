@@ -1,6 +1,7 @@
 import requests
 import logging
-from typing import Optional
+from typing import Optional, Dict, Any
+from django.conf import settings
 from .models import City
 
 logger = logging.getLogger(__name__)
@@ -59,4 +60,79 @@ def get_default_city() -> City:
         defaults={'is_active': True, 'sort_order': 0}
     )
     return city
+
+
+def get_seo_context(obj: Any = None, default_title: str = 'Haron Market', default_description: str = '', default_keywords: str = '', og_image: str = None) -> Dict[str, str]:
+    """
+    Получает SEO контекст из объекта или использует значения по умолчанию.
+    
+    Args:
+        obj: Объект с SEO полями (Product, Category, StaticPage и т.д.)
+        default_title: Заголовок по умолчанию
+        default_description: Описание по умолчанию
+        default_keywords: Ключевые слова по умолчанию
+        og_image: URL изображения для OG (если не указано, будет получено из объекта)
+    
+    Returns:
+        Словарь с SEO данными для контекста шаблона
+    """
+    seo_context = {
+        'seo_meta_title': default_title,
+        'seo_meta_description': default_description,
+        'seo_meta_keywords': default_keywords,
+        'seo_og_image': og_image,
+    }
+    
+    if obj:
+        # Получаем meta_title
+        if hasattr(obj, 'get_meta_title'):
+            seo_context['seo_meta_title'] = obj.get_meta_title() or default_title
+        elif hasattr(obj, 'meta_title') and obj.meta_title:
+            seo_context['seo_meta_title'] = obj.meta_title
+        elif hasattr(obj, 'title'):
+            seo_context['seo_meta_title'] = f"{obj.title} - {default_title}"
+        elif hasattr(obj, 'name'):
+            seo_context['seo_meta_title'] = f"{obj.name} - {default_title}"
+        
+        # Получаем meta_description
+        if hasattr(obj, 'get_meta_description'):
+            seo_context['seo_meta_description'] = obj.get_meta_description() or default_description
+        elif hasattr(obj, 'meta_description') and obj.meta_description:
+            seo_context['seo_meta_description'] = obj.meta_description
+        elif hasattr(obj, 'description') and obj.description:
+            from django.utils.html import strip_tags
+            clean_description = strip_tags(str(obj.description))[:500]
+            seo_context['seo_meta_description'] = clean_description or default_description
+        
+        # Получаем meta_keywords
+        if hasattr(obj, 'meta_keywords') and obj.meta_keywords:
+            seo_context['seo_meta_keywords'] = obj.meta_keywords
+        
+        # Получаем OG изображение
+        if not og_image:
+            # Для товаров - основное изображение
+            if hasattr(obj, 'images'):
+                main_image = obj.images.filter(is_main=True).first()
+                if not main_image:
+                    main_image = obj.images.first()
+                if main_image and main_image.image:
+                    seo_context['seo_og_image'] = main_image.image.url
+            # Для других объектов - можно добавить логику получения изображения
+            elif hasattr(obj, 'image') and obj.image:
+                seo_context['seo_og_image'] = obj.image.url
+    
+    # Если OG изображение не найдено, используем логотип сайта
+    if not seo_context['seo_og_image']:
+        try:
+            from .models import SiteSettings
+            site_settings = SiteSettings.objects.first()
+            if site_settings and site_settings.logo:
+                seo_context['seo_og_image'] = site_settings.logo.url
+        except Exception:
+            pass
+    
+    # OG изображение будет преобразовано в абсолютный URL в шаблоне через request
+    # Здесь оставляем относительный URL
+    
+    return seo_context
 

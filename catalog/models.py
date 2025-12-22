@@ -3,9 +3,10 @@ from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from ckeditor.fields import RichTextField
+from core.models import SEOMixin
 
 
-class Category(models.Model):
+class Category(SEOMixin, models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Название"))
     slug = models.SlugField(max_length=255, unique=True, blank=True, verbose_name=_("Слаг"))
     parent = models.ForeignKey(
@@ -26,7 +27,7 @@ class Category(models.Model):
         return self.name
 
 
-class Product(models.Model):
+class Product(SEOMixin, models.Model):
     COLOR_CHOICES = [
         ("red", "Красный"),
         ("green", "Зеленый"),

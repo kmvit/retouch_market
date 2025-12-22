@@ -5,6 +5,49 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 
 
+class SEOMixin(models.Model):
+    """Абстрактная модель для SEO метаданных"""
+    meta_title = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Meta Title"),
+        help_text=_("Заголовок страницы для поисковых систем (до 60 символов)")
+    )
+    meta_description = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name=_("Meta Description"),
+        help_text=_("Описание страницы для поисковых систем (до 160 символов)")
+    )
+    meta_keywords = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name=_("Meta Keywords"),
+        help_text=_("Ключевые слова через запятую")
+    )
+
+    class Meta:
+        abstract = True
+
+    def get_meta_title(self):
+        """Возвращает meta_title или генерирует из title/name"""
+        if self.meta_title:
+            return self.meta_title
+        return getattr(self, 'title', getattr(self, 'name', ''))
+
+    def get_meta_description(self):
+        """Возвращает meta_description или генерирует из description"""
+        if self.meta_description:
+            return self.meta_description
+        description = getattr(self, 'description', '')
+        if description:
+            # Убираем HTML теги для чистого текста
+            from django.utils.html import strip_tags
+            clean_description = strip_tags(str(description))
+            return clean_description[:500]
+        return ''
+
+
 class City(models.Model):
     """Модель города"""
     name = models.CharField(max_length=100, unique=True, verbose_name=_("Название"))
@@ -35,12 +78,10 @@ class SiteSettings(models.Model):
         return "Настройки сайта"
 
 
-class StaticPage(models.Model):
+class StaticPage(SEOMixin, models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Заголовок"))
     slug = models.SlugField(max_length=255, unique=True, verbose_name=_("Слаг"))
     content = RichTextField(blank=True, verbose_name=_("Содержимое"))
-    meta_title = models.CharField(max_length=255, blank=True, verbose_name=_("Meta title"))
-    meta_description = models.CharField(max_length=500, blank=True, verbose_name=_("Meta description"))
     is_active = models.BooleanField(default=True, verbose_name=_("Активна"))
     sort_order = models.PositiveIntegerField(default=0, verbose_name=_("Порядок"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Создана"))

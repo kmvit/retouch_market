@@ -13,7 +13,11 @@
     </nav>
     <div class="title-1 mb-4">{{ page_title }}</div>
     <div class="static-content">
-      <p>{{ page_title }}</p>
+      {% if page and page.content %}
+        {{ page.content|safe }}
+      {% else %}
+        <p>{{ page_title }}</p>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

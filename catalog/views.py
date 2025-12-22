@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Category, Product
+from core.utils import get_seo_context
 
 # Create your views here.
 def catalog(request):
@@ -33,6 +34,14 @@ def catalog(request):
             'is_search': True,
             'sort_by': sort_by,
         }
+        
+        # SEO для страницы поиска
+        seo_context = get_seo_context(
+            default_title=f'Поиск: {search_query} - Haron Market',
+            default_description=f'Результаты поиска по запросу "{search_query}" в каталоге Haron Market',
+            default_keywords=f'{search_query}, поиск, товары'
+        )
+        context.update(seo_context)
     else:
         # Получаем все родительские категории (без родителя)
         categories = Category.objects.filter(parent__isnull=True).order_by('name')
@@ -60,6 +69,14 @@ def catalog(request):
             'sort_by': sort_by,
         }
     
+    # Получаем SEO данные для каталога
+    seo_context = get_seo_context(
+        default_title='Каталог товаров - Haron Market',
+        default_description='Каталог товаров Haron Market. Большой выбор товаров по выгодным ценам.',
+        default_keywords='каталог, товары, покупки, интернет магазин'
+    )
+    context.update(seo_context)
+    
     return render(request, 'catalog/catalog.html', context)
 
 def product_detail(request, product_id):
@@ -73,8 +90,16 @@ def product_detail(request, product_id):
         seller__isnull=False  # Только товары с продавцом
     ).exclude(id=product.id).select_related('seller').prefetch_related('images')[:4]
     
+    # Получаем SEO данные
+    seo_context = get_seo_context(
+        obj=product,
+        default_title=f"{product.name} - Haron Market",
+        default_description=f"Купить {product.name} в Haron Market. {product.category.name if product.category else ''}"
+    )
+    
     context = {
         'product': product,
         'related_products': related_products,
+        **seo_context,
     }
     return render(request, 'catalog/detail.html', context)

@@ -3,7 +3,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from catalog.models import Category, Product
-from .models import City
+from .models import City, StaticPage
+from .utils import get_seo_context
 
 # Create your views here.
 def index(request):
@@ -37,29 +38,71 @@ def index(request):
                 'products': products
             })
     
+    # Получаем SEO данные для главной страницы
+    seo_context = get_seo_context(
+        default_title='Haron Market - Маркетплейс товаров',
+        default_description='Haron Market - удобный маркетплейс для покупки товаров. Большой выбор товаров по выгодным ценам.',
+        default_keywords='маркетплейс, товары, покупки, интернет магазин'
+    )
+    
     context = {
         'categories_with_products': categories_with_products,
         'sort_by': sort_by,
+        **seo_context,
     }
     return render(request, 'core/home.html', context)
 
 def tariffs(request):
-    return render(request, 'core/tariffs.html')
+    seo_context = get_seo_context(
+        default_title='Тарифы - Haron Market',
+        default_description='Тарифы и условия работы на маркетплейсе Haron Market',
+        default_keywords='тарифы, условия, маркетплейс'
+    )
+    context = {**seo_context}
+    return render(request, 'core/tariffs.html', context)
 
 def partner(request):
-    return render(request, 'core/partner.html')
+    seo_context = get_seo_context(
+        default_title='Партнерская программа - Haron Market',
+        default_description='Станьте партнером Haron Market и зарабатывайте вместе с нами',
+        default_keywords='партнерская программа, сотрудничество, заработок'
+    )
+    context = {**seo_context}
+    return render(request, 'core/partner.html', context)
 
 def static_page(request, page_slug):
-    page_titles = {
-        'info': 'Информация',
-        'help': 'Помощь',
-        'work': 'Работа на портале',
-        'contacts': 'Контакты',
-        'requisites': 'Реквизиты',
-        'privacy': 'Политика конфиденциальности',
+    # Пытаемся получить страницу из базы данных
+    try:
+        page = StaticPage.objects.get(slug=page_slug, is_active=True)
+        page_title = page.title
+        seo_context = get_seo_context(
+            obj=page,
+            default_title=f"{page.title} - Haron Market",
+            default_description=page.content[:500] if page.content else ''
+        )
+    except StaticPage.DoesNotExist:
+        # Fallback на старый способ для обратной совместимости
+        page_titles = {
+            'info': 'Информация',
+            'help': 'Помощь',
+            'work': 'Работа на портале',
+            'contacts': 'Контакты',
+            'requisites': 'Реквизиты',
+            'privacy': 'Политика конфиденциальности',
+        }
+        page_title = page_titles.get(page_slug, 'Страница')
+        page = None
+        seo_context = get_seo_context(
+            default_title=f"{page_title} - Haron Market",
+            default_description=f"Информация о {page_title.lower()} на Haron Market"
+        )
+    
+    context = {
+        'page': page,
+        'page_title': page_title,
+        **seo_context,
     }
-    page_title = page_titles.get(page_slug, 'Страница')
-    return render(request, 'core/static_page.html', {'page_title': page_title})
+    return render(request, 'core/static_page.html', context)
 
 
 @require_http_methods(["POST"])
