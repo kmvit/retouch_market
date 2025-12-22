@@ -5,6 +5,7 @@ app_name = 'core'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('robots.txt', views.robots_txt, name='robots-txt'),
     path('partner/', views.partner, name='partner'),
     path('tariffs/', views.tariffs, name='tariffs'),
     path('info/', views.static_page, {'page_slug': 'info'}, name='info'),

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from pathlib import Path
 from catalog.models import Category, Product
 from .models import City, StaticPage
 from .utils import get_seo_context
@@ -155,3 +157,14 @@ def get_cities_list(request):
         logger = logging.getLogger(__name__)
         logger.error(f"Ошибка при получении списка городов: {str(e)}", exc_info=True)
         return JsonResponse({'cities': [], 'error': str(e)}, status=500)
+
+
+def robots_txt(request):
+    """Отдает robots.txt файл из корня проекта"""
+    robots_path = Path(settings.BASE_DIR) / 'robots.txt'
+    try:
+        with open(robots_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        return HttpResponse(content, content_type='text/plain')
+    except FileNotFoundError:
+        return HttpResponse('User-agent: *\nAllow: /', content_type='text/plain', status=404)
