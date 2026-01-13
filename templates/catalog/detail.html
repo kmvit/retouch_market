@@ -69,6 +69,9 @@
                   <div class="product-description">{{ product.description|safe }}</div>
                 </div>
               {% endif %}
+              <div class="mt-3">
+                <p><strong>РЕКЛАМНАЯ ИНФОРМАЦИЯ</strong> разместить свои товары в нашем интернет магазине легко!!! Нажми на вкладку стать партнером и зарегистрируйся, а после продавай свои товары по всей России и странам СНГ</p>
+              </div>
               {% if product.color %}
                 <div class="title-3 mt-2">Цвет:</div>
                 <select class="mt-05 chosen" name="color" data-placeholder="Пожалуйста, выберите">
@@ -83,6 +86,7 @@
                   <option value="{{ product.shape }}" selected>{{ product.get_shape_display }}</option>
                 </select>
               {% endif %}
+             
               <div class="title-3 mt-2">Количество:</div>
               <div class="quantity mt-05">
                 <input class="form-control" type="number" min="1" step="1" value="1" id="quantity-input">
