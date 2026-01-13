@@ -1,0 +1,160 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block title %}Редактирование товара - Haron Market{% endblock %}
+
+{% block content %}
+  <div class="account">
+    <div class="container">
+      {% if not user.is_verified %}
+      <div class="alert alert-info my-2">
+        <strong>Информация:</strong> Вы можете просматривать каталог, но добавление и редактирование товаров будет доступно после верификации аккаунта администратором.
+      </div>
+      {% endif %}
+      <div class="row justify-content-between mb-3">
+        <div class="col-auto">
+          <div class="title-2 mt-0">Редактирование товара</div>
+        </div>
+        <div class="col-auto">
+          <a href="{% url 'accounts:account-catalog' %}" class="btn btn-secondary btn-sm">Назад к каталогу</a>
+        </div>
+      </div>
+      
+      {% if error_message %}
+      <div class="alert alert-danger mb-3">{{ error_message }}</div>
+      {% endif %}
+      
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row row-cols-md-2 row-cols-1">
+          <div class="col">
+            <label class="mb-1">
+              <p class="form-label">Категория *</p>
+              <select class="form-control" name="category_id" required>
+                <option value="">Выберите категорию</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if product.category.id == category.id %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+              </select>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Название товара *</p>
+              <input class="form-control" type="text" name="name" value="{{ product.name }}" placeholder="Название товара" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Цена *</p>
+              <input class="form-control" type="number" name="price" value="{{ price_value }}" step="0.01" min="0" placeholder="0.00" required>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Цена со скидкой</p>
+              <input class="form-control" type="number" name="discount_price" value="{{ discount_price_value }}" step="0.01" min="0" placeholder="0.00">
+            </label>
+          </div>
+          <div class="col">
+            <label class="mb-1">
+              <p class="form-label">Цвет</p>
+              <select class="form-control" name="color">
+                <option value="">Не выбран</option>
+                <option value="red" {% if product.color == 'red' %}selected{% endif %}>Красный</option>
+                <option value="green" {% if product.color == 'green' %}selected{% endif %}>Зеленый</option>
+                <option value="blue" {% if product.color == 'blue' %}selected{% endif %}>Синий</option>
+                <option value="black" {% if product.color == 'black' %}selected{% endif %}>Черный</option>
+                <option value="white" {% if product.color == 'white' %}selected{% endif %}>Белый</option>
+              </select>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Форма</p>
+              <select class="form-control" name="shape">
+                <option value="">Не выбрана</option>
+                <option value="round" {% if product.shape == 'round' %}selected{% endif %}>Круглая</option>
+                <option value="square" {% if product.shape == 'square' %}selected{% endif %}>Квадратная</option>
+                <option value="rect" {% if product.shape == 'rect' %}selected{% endif %}>Прямоугольная</option>
+                <option value="other" {% if product.shape == 'other' %}selected{% endif %}>Другая</option>
+              </select>
+            </label>
+            <label class="mb-1">
+              <p class="form-label">Описание</p>
+              <textarea class="form-control" name="description" rows="6" placeholder="Описание товара">{{ product.description|safe }}</textarea>
+            </label>
+          </div>
+        </div>
+        
+        <div class="row mt-3">
+          <div class="col-12">
+            <label class="mb-1">
+              <p class="form-label">Существующие изображения</p>
+              {% if product.images.all %}
+              <div class="d-flex flex-wrap gap-2 mb-2">
+                {% for image in product.images.all %}
+                <div class="position-relative" style="width: 100px; height: 100px;">
+                  <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
+                  {% if image.is_main %}
+                  <span class="badge bg-primary" style="position: absolute; top: 5px; left: 5px;">Основное</span>
+                  {% endif %}
+                </div>
+                {% endfor %}
+              </div>
+              {% else %}
+              <p class="text-muted">Нет загруженных изображений</p>
+              {% endif %}
+            </label>
+          </div>
+        </div>
+        
+        <div class="row mt-2">
+          <div class="col-12">
+            <label class="mb-1">
+              <p class="form-label">Добавить новые изображения</p>
+              <input class="form-control" type="file" name="images" accept="image/*" multiple>
+              <small class="form-text text-muted">Можно загрузить несколько изображений. Существующие изображения останутся.</small>
+              <div id="image-preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+            </label>
+          </div>
+        </div>
+        
+        <div class="mt-3">
+          <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+          <a href="{% url 'accounts:account-catalog' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Предпросмотр новых изображений
+  const imageInput = document.querySelector('input[name="images"]');
+  const imagePreview = document.getElementById('image-preview');
+  
+  if (imageInput && imagePreview) {
+    imageInput.addEventListener('change', function(e) {
+      imagePreview.innerHTML = '';
+      const files = e.target.files;
+      
+      if (files && files.length > 0) {
+        Array.from(files).forEach((file) => {
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.style.width = '100px';
+              img.style.height = '100px';
+              img.style.objectFit = 'cover';
+              img.style.borderRadius = '4px';
+              img.style.marginRight = '10px';
+              img.style.marginBottom = '10px';
+              img.style.border = '1px solid #ddd';
+              imagePreview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+    });
+  }
+});
+</script>
+{% endblock %}

@@ -71,7 +71,7 @@
                     {% endif %}
                   </div>
                 </div>
-                <a class="card-product__title" href="{% url 'catalog:detail' product_id=product.id %}">{{ product.name }}</a>
+                <a class="card-product__title" href="{% url 'accounts:edit-product' product_id=product.id %}">{{ product.name }}</a>
                 <div class="card-product__price">
                   {% if product.discount_price %}
                   <nobr class="_old">{{ product.price }} руб.</nobr>  

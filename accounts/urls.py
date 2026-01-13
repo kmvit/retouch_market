@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/account/change-password/', views.AccountView.as_view(), {'action': 'change-password'}, name='change-password'),
     path('api/account/add-product/', views.add_product, name='add-product'),
     path('api/account/delete-product/<int:product_id>/', views.delete_product, name='delete-product'),
+    path('account/catalog/edit/<int:product_id>/', views.edit_product, name='edit-product'),
 ]
 
 

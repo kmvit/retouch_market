@@ -486,6 +486,144 @@ def add_product(request):
 
 
 @login_required
+def edit_product(request, product_id):
+    """Редактирование товара пользователя"""
+    from catalog.models import Category, Product, ProductImage
+    from django.db.models import Max
+    
+    # Проверка верификации
+    if not request.user.is_verified:
+        return render(request, 'accounts/account-catalog.html', {
+            'error_message': 'Ваш аккаунт находится на верификации. Функционал будет доступен после проверки администратором.'
+        })
+    
+    try:
+        # Получаем товар и проверяем, что он принадлежит текущему пользователю
+        product = Product.objects.prefetch_related('images').get(id=product_id, seller=request.user)
+    except Product.DoesNotExist:
+        return redirect('accounts:account-catalog')
+    
+    # Получаем все категории для формы
+    categories = Category.objects.filter(parent__isnull=True).order_by('name')
+    
+    if request.method == 'POST':
+        try:
+            # Получаем данные из формы
+            category_id = request.POST.get('category_id', '').strip()
+            name = request.POST.get('name', '').strip()
+            description = request.POST.get('description', '').strip()
+            price = request.POST.get('price', '').strip()
+            discount_price = request.POST.get('discount_price', '').strip() or None
+            color = request.POST.get('color', '').strip() or ''
+            shape = request.POST.get('shape', '').strip() or ''
+            
+            # Получаем загруженные файлы
+            images = request.FILES.getlist('images')
+            
+            # Валидация обязательных полей
+            if not all([category_id, name, price]):
+                return render(request, 'accounts/edit-product.html', {
+                    'product': product,
+                    'categories': categories,
+                    'error_message': 'Заполните все обязательные поля: категория, название, цена'
+                })
+            
+            # Проверяем категорию
+            try:
+                category = Category.objects.get(id=category_id, parent__isnull=True)
+            except (Category.DoesNotExist, ValueError, TypeError):
+                return render(request, 'accounts/edit-product.html', {
+                    'product': product,
+                    'categories': categories,
+                    'error_message': 'Выбранная категория не найдена'
+                })
+            
+            # Проверяем цену
+            try:
+                price_decimal = float(price)
+                if price_decimal <= 0:
+                    raise ValueError("Цена должна быть положительным числом")
+            except (ValueError, TypeError):
+                return render(request, 'accounts/edit-product.html', {
+                    'product': product,
+                    'categories': categories,
+                    'error_message': 'Неверный формат цены'
+                })
+            
+            # Проверяем цену со скидкой, если указана
+            discount_price_decimal = None
+            if discount_price:
+                try:
+                    discount_price_decimal = float(discount_price)
+                    if discount_price_decimal <= 0:
+                        raise ValueError("Цена со скидкой должна быть положительным числом")
+                    if discount_price_decimal >= price_decimal:
+                        return render(request, 'accounts/edit-product.html', {
+                            'product': product,
+                            'categories': categories,
+                            'error_message': 'Цена со скидкой должна быть меньше обычной цены'
+                        })
+                except (ValueError, TypeError):
+                    return render(request, 'accounts/edit-product.html', {
+                        'product': product,
+                        'categories': categories,
+                        'error_message': 'Неверный формат цены со скидкой'
+                    })
+            
+            # Обновляем товар
+            product.category = category
+            product.name = name
+            product.description = description
+            product.price = price_decimal
+            product.discount_price = discount_price_decimal
+            product.color = color if color in dict(Product.COLOR_CHOICES) else ''
+            product.shape = shape if shape in dict(Product.SHAPE_CHOICES) else ''
+            product.save()
+            
+            # Сохраняем новые изображения, если они загружены
+            if images:
+                # Определяем максимальный sort_order для существующих изображений
+                max_sort_order = product.images.aggregate(Max('sort_order'))['sort_order__max'] or -1
+                
+                for index, image_file in enumerate(images):
+                    # Проверяем тип файла
+                    if not image_file.content_type.startswith('image/'):
+                        continue
+                    
+                    try:
+                        ProductImage.objects.create(
+                            product=product,
+                            image=image_file,
+                            alt_text=name,
+                            is_main=False,  # Новые изображения не делаем основными автоматически
+                            sort_order=max_sort_order + index + 1
+                        )
+                    except Exception as e:
+                        logger.error(f"Ошибка сохранения изображения {image_file.name}: {str(e)}")
+            
+            # Перенаправляем на страницу каталога
+            return redirect('accounts:account-catalog')
+            
+        except Exception as e:
+            logger.error(f"Ошибка редактирования товара {product_id}: {str(e)}")
+            return render(request, 'accounts/edit-product.html', {
+                'product': product,
+                'categories': categories,
+                'error_message': f'Ошибка при сохранении: {str(e)}'
+            })
+    
+    # GET запрос - показываем форму редактирования
+    # Преобразуем DecimalField в строку для корректного отображения в input
+    context = {
+        'product': product,
+        'categories': categories,
+        'price_value': str(product.price) if product.price else '',
+        'discount_price_value': str(product.discount_price) if product.discount_price else '',
+    }
+    return render(request, 'accounts/edit-product.html', context)
+
+
+@login_required
 @require_http_methods(["POST"])
 def delete_product(request, product_id):
     """Удаление товара пользователя"""
